@@ -1,18 +1,21 @@
 import { api } from '../axios';
+import { CommonResponse } from '../types';
 
-// 요청 body 타입
 export interface CreateLoginRequest {
     phoneNumber: string;
 }
 
-// LOGIN API
-export const postLogin = async (body: CreateLoginRequest) => {
-    const response = await api.post(
-        `/api/v1/member/login`,
+export interface LoginResponse {
+    memberId: number;
+    nickname: string;
+    type: string;
+}
+
+export const postLogin = async (body: CreateLoginRequest): Promise<CommonResponse<LoginResponse>> => {
+    const response = await api.post<CommonResponse<LoginResponse>>(
+        '/api/v1/member/login',
         body,
     );
 
     return response.data;
 };
-
-// 전화번호 로그인

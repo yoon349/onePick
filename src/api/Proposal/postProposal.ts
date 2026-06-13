@@ -1,5 +1,4 @@
-import { api } from '../axios';
-import CookieManager from '@react-native-cookies/cookies';
+import { API_BASE_URL, getSessionHeaders } from '../axios';
 
 import { TextEncoder } from 'text-encoding';
 import { decode } from 'base-64';
@@ -17,14 +16,6 @@ export interface CreatePostRequest {
 }
 
 
-const BASE_URL = 'http://13.209.73.31:8080';
-
-
-const getJSessionId = async (): Promise<string | null> => {
-    const cookies = await CookieManager.getAll();
-    return cookies['JSESSIONID']?.value ?? null;
-};
-
 // base64 문자열 → Uint8Array 변환
 const base64ToUint8Array = (base64: string): Uint8Array => {
     const binaryString = decode(base64);
@@ -40,14 +31,14 @@ const base64ToUint8Array = (base64: string): Uint8Array => {
 export const postProposal = async (body: CreatePostRequest) => {
 
     const hasImages = body.imageMetas && body.imageMetas.length > 0;
-    const jsessionid = await getJSessionId();
+    const sessionHeaders = await getSessionHeaders();
 
     if (!hasImages) {
-        const response = await fetch(`${BASE_URL}/api/v1/proposals`, {
+        const response = await fetch(`${API_BASE_URL}/api/v1/proposals`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                ...(jsessionid ? { 'SessionID': jsessionid } : {}),
+                ...sessionHeaders,
             },
             body: JSON.stringify({
                 title:        body.title,
@@ -120,11 +111,11 @@ export const postProposal = async (body: CreatePostRequest) => {
     combined.set(imageBytes,  offset); offset += imageBytes.length;
     combined.set(closing,     offset);
 
-    const response = await fetch(`${BASE_URL}/api/v1/proposals`, {
+    const response = await fetch(`${API_BASE_URL}/api/v1/proposals`, {
         method: 'POST',
         headers: {
             'Content-Type': `multipart/form-data; boundary=${boundary}`,
-            ...(jsessionid ? { 'SessionID': jsessionid } : {}),
+            ...sessionHeaders,
         },
         body: combined.buffer,
     });
