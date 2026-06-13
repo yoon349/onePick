@@ -19,7 +19,7 @@ import { postProposalFunding } from '../../../api/ProposalFunding/postProposalFu
 
 import { api } from '../../../api/axios';
 
-import StatusBadge from '../../../public/screen/StatusBadge';
+import StatusBadge from '../Individual/StatusBadge';
 
 
 

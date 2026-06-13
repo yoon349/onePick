@@ -8,6 +8,7 @@ export interface CreateProductRequest {
     minPeople: number;
     deadlineDays: number;
     category: string;
+    productId?: number;
 }
 
 // POST API

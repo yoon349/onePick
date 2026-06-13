@@ -48,6 +48,12 @@ export default function NewProduct({ navigation, route }: Props) {
     const [category, setCategory]         = useState('');
 
     useEffect(() => {
+        if (aiPrice == null) {
+            navigation.replace('AiProductPriceScreen');
+        }
+    }, [aiPrice, navigation]);
+
+    useEffect(() => {
         const priceValue = parsePositiveInt(price);
         const minPeopleValue = parsePositiveInt(minPeople);
         const deadlineValue = parsePositiveInt(deadlineDays);
@@ -63,11 +69,11 @@ export default function NewProduct({ navigation, route }: Props) {
 
     const handleSubmit = async () => {
         try {
-            const parsedPrice = parsePositiveInt(price);
             const parsedMinPeople = parsePositiveInt(minPeople);
             const parsedDeadlineDays = parsePositiveInt(deadlineDays);
+            const submitPrice = aiPrice ?? parsePositiveInt(price);
 
-            if (parsedPrice === null || parsedMinPeople === null || parsedDeadlineDays === null) {
+            if (submitPrice === null || parsedMinPeople === null || parsedDeadlineDays === null) {
                 Alert.alert('입력 오류', '가격, 최소 인원, 마감 기한은 숫자만 입력해 주세요.');
                 return;
             }
@@ -75,7 +81,7 @@ export default function NewProduct({ navigation, route }: Props) {
             const body = {
                 title,
                 content,
-                price:        parsedPrice,
+                price:        submitPrice,
                 minPeople:    parsedMinPeople,
                 deadlineDays: parsedDeadlineDays,
                 category,
@@ -138,7 +144,7 @@ export default function NewProduct({ navigation, route }: Props) {
 
                     <InputField label="제목"      placeholder="제목 입력"      value={title}        onChangeText={setTitle} />
                     <InputField label="상품 설명" placeholder="상품 설명 입력" value={content}      onChangeText={setContent} multiline />
-                    <InputField label="가격"      placeholder="가격 입력"      value={price}        onChangeText={(text: string) => setPrice(filterDigitsOnly(text))} numeric />
+                    <InputField label="가격 (AI 산정)" placeholder="AI 분석 후 자동 입력" value={price} onChangeText={(text: string) => setPrice(filterDigitsOnly(text))} numeric editable={!aiPrice} />
                     <InputField label="최소 인원" placeholder="최소 인원 입력" value={minPeople}    onChangeText={(text: string) => setMinPeople(filterDigitsOnly(text))} numeric />
                     <InputField label="마감 기한" placeholder="일 단위 입력"   value={deadlineDays} onChangeText={(text: string) => setDeadlineDays(filterDigitsOnly(text))} numeric />
 
@@ -173,12 +179,16 @@ export default function NewProduct({ navigation, route }: Props) {
     );
 }
 
-function InputField({ label, placeholder, value, onChangeText, multiline, numeric }: any) {
+function InputField({ label, placeholder, value, onChangeText, multiline, numeric, editable = true }: any) {
     return (
         <View style={styles.inputGroup}>
             <Text style={styles.inputLabel}>{label}</Text>
             <TextInput
-                style={[styles.input, multiline && { height: 100, textAlignVertical: 'top' }]}
+                style={[
+                    styles.input,
+                    multiline && { height: 100, textAlignVertical: 'top' },
+                    !editable && { backgroundColor: '#f0f4ff', color: '#0076F0' },
+                ]}
                 placeholder={placeholder}
                 placeholderTextColor="#aaa"
                 value={value}
@@ -186,6 +196,7 @@ function InputField({ label, placeholder, value, onChangeText, multiline, numeri
                 keyboardType={numeric ? 'number-pad' : 'default'}
                 inputMode={numeric ? 'numeric' : undefined}
                 multiline={multiline}
+                editable={editable}
             />
         </View>
     );

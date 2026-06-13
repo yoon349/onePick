@@ -19,7 +19,7 @@ import { RouteProp } from '@react-navigation/native';
 
 import { getProduct } from '../../../api/Product/getProduct';
 
-import StatusBadge from '../../../public/screen/StatusBadge';
+import StatusBadge from './StatusBadge';
 
 type HomeScreenNavigationProp =
   NativeStackNavigationProp<RootStackParamList>;

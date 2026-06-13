@@ -204,7 +204,7 @@ export default function Mypage({ navigation, route }: Props) {
                 style={styles.dashboardCard}
                 onPress={
                     isCEO
-                    ? () => navigation.navigate('NewProduct')
+                    ? () => navigation.navigate('AiProductPriceScreen')
                     : () => navigation.navigate('NewProposal')
                 }
             >
