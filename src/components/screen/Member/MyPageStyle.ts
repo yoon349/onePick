@@ -1,7 +1,28 @@
 import { StyleSheet } from 'react-native';
 import { SCREEN_HEADER_TOP } from '../../../utils/screenLayout';
+import { brand } from '../../../public/style/colors';
+
 
 export const styles = StyleSheet.create({
+
+    ibkBlueView: {
+        backgroundColor: brand.ibkBlue,
+    },
+    ibkDeepBlueView: {
+        backgroundColor: brand.ibkDeepBlue,
+    },
+    ibkBlueText: {
+        color: brand.ibkBlue,
+    },
+    ibkDeepBlueText: {
+        color: brand.ibkDeepBlue,
+    },
+    ibkBlueBorder: {
+        color: brand.ibkBlue,
+    },
+    ibkDeepBlueBorder: {
+        color: brand.ibkDeepBlue,
+    },
 
     container: {
         flex: 1,
@@ -52,7 +73,7 @@ export const styles = StyleSheet.create({
         fontWeight: '700',
         color: '#1a1a2e',
 
-        marginBottom: 18,
+        marginBottom: 20,
     },
 
     infoRow: {
@@ -89,7 +110,7 @@ export const styles = StyleSheet.create({
 
         borderRadius: 14,
 
-        paddingVertical: 18,
+        paddingVertical: 12,
         paddingHorizontal: 16,
 
         marginBottom: 12,
@@ -126,6 +147,27 @@ export const styles = StyleSheet.create({
 profileTop: {
     flexDirection: 'row',
     alignItems: 'center',
+},
+
+profileWrapper: {
+    width: 72,
+    height: 72,
+    borderRadius: 36,
+    overflow: 'hidden',
+},
+
+profileImageBlue: {
+    bottom: 14,
+    right: 14,
+    width: '135%',
+    height: '135%',
+},
+
+profileImageDeepBlue: {
+    bottom: 16,
+    right: 11,
+    width: '140%',
+    height: '140%',
 },
 
 profileCircle: {
@@ -226,7 +268,7 @@ dashboardCard: {
 
     borderRadius: 22,
 
-    paddingVertical: 24,
+    paddingVertical: 14,
 
     alignItems: 'center',
 
@@ -238,14 +280,15 @@ dashboardCard: {
 },
 
 dashboardEmoji: {
-    fontSize: 28,
+    marginBottom: 12,
+    fontSize: 42,
 },
 
 dashboardTitle: {
-    marginTop: 10,
-
-    fontSize: 14,
-    color: '#666',
+    fontSize: 16,
+    //color: '#666',
+    fontWeight: 'bold',
+    color: '#0076F0',
 },
 
 dashboardValue: {
@@ -280,4 +323,168 @@ profilePaymentText: {
     fontSize: 16,
     fontWeight: '500',
 },
+
+/*
+hero: {
+    backgroundColor: '#002B7F',
+
+    borderBottomLeftRadius: 36,
+    borderBottomRightRadius: 36,
+
+    paddingHorizontal: 24,
+    paddingTop: SCREEN_HEADER_TOP + 10,
+    paddingBottom: 36,
+
+    marginHorizontal: -20,
+},
+
+heroTop: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+},
+
+memberBadge: {
+    backgroundColor: 'rgba(255,255,255,0.18)',
+
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+
+    borderRadius: 999,
+},
+
+memberBadgeText: {
+    color: '#fff',
+    fontSize: 12,
+    fontWeight: '700',
+},
+
+heroTitle: {
+    marginTop: 26,
+
+    fontSize: 38,
+    lineHeight: 46,
+
+    fontWeight: '800',
+
+    color: '#fff',
+},
+
+heroSub: {
+    marginTop: 14,
+
+    color: 'rgba(255,255,255,0.7)',
+
+    fontSize: 16,
+},
+
+profileCircle: {
+    width: 56,
+    height: 56,
+
+    borderRadius: 999,
+
+    backgroundColor: 'rgba(255,255,255,0.2)',
+
+    justifyContent: 'center',
+    alignItems: 'center',
+},
+
+profileInitial: {
+    color: '#fff',
+
+    fontSize: 24,
+    fontWeight: '700',
+},
+
+actionCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+
+    backgroundColor: '#fff',
+
+    borderRadius: 28,
+
+    padding: 22,
+
+    marginTop: 18,
+
+    shadowColor: '#000',
+    shadowOpacity: 0.05,
+    shadowRadius: 10,
+
+    elevation: 2,
+},
+
+actionIconBox: {
+    width: 78,
+    height: 78,
+
+    borderRadius: 22,
+
+    backgroundColor: '#EEF6FF',
+
+    justifyContent: 'center',
+    alignItems: 'center',
+},
+
+actionEmoji: {
+    fontSize: 34,
+},
+
+actionContent: {
+    marginLeft: 18,
+},
+
+actionTitle: {
+    fontSize: 28,
+    fontWeight: '800',
+
+    color: '#0B2A6F',
+},
+
+actionDesc: {
+    marginTop: 6,
+
+    fontSize: 16,
+
+    color: '#8C8C8C',
+},
+
+menuCard: {
+    backgroundColor: '#F7F8FC',
+
+    borderRadius: 24,
+
+    marginTop: 24,
+
+    paddingHorizontal: 20,
+},
+
+menuRow: {
+    flexDirection: 'row',
+
+    justifyContent: 'space-between',
+    alignItems: 'center',
+
+    paddingVertical: 24,
+},
+
+menuRowText: {
+    fontSize: 20,
+    fontWeight: '700',
+
+    color: '#23407A',
+},
+
+menuArrow: {
+    fontSize: 28,
+    color: '#B0B7C3',
+},
+
+menuDivider: {
+    height: 1,
+    backgroundColor: '#E5E7EB',
+},
+*/
 });

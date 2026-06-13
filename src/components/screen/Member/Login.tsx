@@ -90,7 +90,7 @@ export default function Login({ navigation }: Props) {
             <Text style={styles.inputLabel}>휴대폰번호</Text>
             <TextInput
               style={styles.input}
-              placeholder="01011112222"
+              placeholder="01012345678"
               placeholderTextColor="#9AA8B8"
               keyboardType="phone-pad"
               inputAccessoryViewID={

@@ -165,8 +165,20 @@ export default function NewProposal({ navigation }: Props) {
 
                 {/* HEADER */}
                 <View style={styles.header}>
-                    <Text style={styles.headerTitle}>🛒 구매 요청 글 작성</Text>
-                    <Text style={styles.headerSub}>상품 정보를 입력해 주세요</Text>
+                    <View style={styles.btnView}>
+                        <TouchableOpacity
+                            onPress={() => {navigation.goBack()}}
+                            style={styles.backBtn}
+                        >
+                            <Text style={styles.backIcon}>
+                                ←
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.headerView}>
+                        <Text style={styles.headerTitle}>🛒  제작 제안 글 작성</Text>
+                        <Text style={styles.headerSub}>필요한 상품의 정보를 입력해 주세요</Text>
+                    </View>
                 </View>
 
                 {/* 탭 */}

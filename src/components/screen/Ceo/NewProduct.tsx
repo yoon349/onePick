@@ -107,8 +107,20 @@ export default function NewProduct({ navigation, route }: Props) {
 
                 {/* 헤더 */}
                 <View style={styles.header}>
-                    <Text style={styles.headerTitle}>🛒 공동구매 글 작성</Text>
-                    <Text style={styles.headerSub}>상품 정보를 확인하고 입력해 주세요</Text>
+                    <View style={styles.btnView}>
+                        <TouchableOpacity
+                            onPress={() => {navigation.goBack()}}
+                            style={styles.backBtn}
+                        >
+                            <Text style={styles.backIcon}>
+                                ←
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.headerView}>
+                        <Text style={styles.headerTitle}>🛒  펀딩 모집 글 작성</Text>
+                        <Text style={styles.headerSub}>모집할 상품의 정보를 입력해 주세요</Text>
+                    </View>
                 </View>
 
                 {/* AI 결과 배너 */}

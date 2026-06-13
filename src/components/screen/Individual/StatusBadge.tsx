@@ -55,13 +55,9 @@ export default function StatusBadge({ status }: { status: BidStatus }) {
 const styles = StyleSheet.create({
 
     badge: {
-        right: 30,
-        top: 30,
-        padding: 10,
         paddingHorizontal: 12,
         paddingVertical: 6,
         borderRadius: 10,
-        alignSelf: 'flex-end',
     },
 
     badgeText: {

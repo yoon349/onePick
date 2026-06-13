@@ -17,11 +17,9 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../navigation/StackNavigator';
 import { RouteProp } from '@react-navigation/native';
 
-import Payment from '../Payment';
-
 import { getProduct } from '../../../api/Product/getProduct';
 
-import StatusBadge from './StatusBadge';
+import StatusBadge from '../../../public/screen/StatusBadge';
 
 type HomeScreenNavigationProp =
   NativeStackNavigationProp<RootStackParamList>;
@@ -38,11 +36,12 @@ type Props = {
 };
 
 
-
 const CATEGORY_LABELS: Record<string, string> = {
   FOOD: '식품', FURNITURE: '가구', DIGITAL: '디지털',
   FASHION: '패션', BEAUTY: '뷰티', ETC: '기타',
 };
+
+
 
 
 function InfoItem({ label, value }: { label: string; value: string }) {
@@ -136,7 +135,6 @@ if (!product) {
     );
  }
 
-
   const fundingRate = product.fundedQuantity === 0 ? 0 : product.fundedQuantity / product.minQuantity * 100;
 
   return (
@@ -160,16 +158,12 @@ if (!product) {
         {/* 이미지 영역 */}
         <View style={styles.imageBox}>
           <Text style={styles.imageEmoji}>{/*product.emoji ?? */'📦'}</Text>
-          <StatusBadge status={product.status} />
-        </View>
 
-        {/* 남은 시간 배너
-        <View style={[styles.timeBanner, isUrgent && styles.timeBannerUrgent]}>
-          <Text style={styles.timeBannerText}>
-            ⏱ {remaining}
-          </Text>
+          <View style={styles.badgeWrapper}>
+            <StatusBadge status={product?.status} />
+          </View>
         </View>
-        */}
+        
         {/* 기본 정보 */}
         <View style={styles.section}>
           <View style={styles.sectionTop}>
@@ -224,7 +218,14 @@ if (!product) {
               }
             />
             <InfoItem label="최소 참여 수량"   value={`${product?.minQuantity}개`} />
-            <InfoItem label="상태"      value={product?.proposalStatus === 'PENDING' ? '진행중' : '완료'} />
+            <InfoItem
+              label="펀딩 모집 상태"
+              value={
+                fundingRate < 100
+                ? '미달'
+                : '펀딩 달성'
+              }
+            />
             <InfoItem label="등록일"    value={product?.createdAt?.slice(0, 10) ?? '-'} />
           </View>
         </View>
@@ -339,15 +340,26 @@ const styles = StyleSheet.create({
   },
 
   // 이미지
+
   imageBox: {
+    position: 'relative',
     height: 240,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    overflow: 'hidden',
   },
+
   imageEmoji: {
     fontSize: 100,
   },
+  
+  badgeWrapper: {
+    position: 'absolute',
+    top: 186,
+    right: 24,
+    zIndex: 20,
+},
 
   // 섹션
   section: {
@@ -368,8 +380,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 4,
     alignSelf: 'flex-start',
+    marginTop: 2,
     marginLeft: 15,
-    marginBottom: 8
   },
   categoryBadgeText: { fontSize: 12, color: 'gray', fontWeight: '600' },
 

@@ -156,7 +156,7 @@ export default function Payment({ navigation, route }: Props) {
 
                     <View style={styles.headerTextWrap}>
                     <Text style={styles.headerTitle}>
-                        💳 결제 수단 선택
+                        💳  { request.isPayment ? '결제 수단 선택' : '내 결제 수단'}
                     </Text>
 
                     <Text style={styles.headerSub}>
@@ -188,12 +188,13 @@ export default function Payment({ navigation, route }: Props) {
                                 style={[
                                     styles.paymentItem,
 
-                                    selectedAccount === account.id &&
+                                    selectedAccount === account.id && request.isPayment &&
                                     styles.paymentItemSelected,
                                 ]}
                                 onPress={() => {
-                                    setSelectedAccount(account.id);
-                                    setSelectedCard(null);
+
+                                    setSelectedCard(account.id);
+                                    setSelectedAccount(null);
 
                                 }}
                             >
@@ -211,11 +212,11 @@ export default function Payment({ navigation, route }: Props) {
                                 </View>
 
                                 {
-                                    selectedAccount === account.id && (
+                                    (selectedAccount === account.id && request.isPayment && (
                                         <Text style={styles.check}>
                                             ✓
                                         </Text>
-                                    )
+                                    ))
                                 }
 
                             </TouchableOpacity>
@@ -248,7 +249,7 @@ export default function Payment({ navigation, route }: Props) {
                                 style={[
                                     styles.paymentItem,
 
-                                    selectedCard === card.id &&
+                                    selectedCard === card.id && request.isPayment &&
                                     styles.paymentItemSelected,
                                 ]}
                                 onPress={() => {
@@ -272,7 +273,7 @@ export default function Payment({ navigation, route }: Props) {
                                 </View>
 
                                 {
-                                    selectedCard === card.id && (
+                                    selectedCard === card.id && request.isPayment && (
                                         <Text style={styles.check}>
                                             ✓
                                         </Text>

@@ -14,10 +14,8 @@ export const styles = StyleSheet.create({
     },
 
     header: {
-        left: 15,
         marginTop: SCREEN_HEADER_TOP_COMPACT,
-        marginBottom: 20,
-        paddingTop: Platform.OS === 'ios' ? 10 : 0,
+        flexDirection: 'row',
     },
 
     headerTitle: {
@@ -30,6 +28,29 @@ export const styles = StyleSheet.create({
     headerSub: {
         fontSize: 14,
         color: '#666',
+    },
+    
+    headerView: {
+        left: 10,
+        marginBottom: 20,
+        paddingTop: Platform.OS === 'ios' ? 10 : 0,
+    },
+    
+    btnView: {
+        alignItems: 'flex-start',
+        marginTop: 10,
+    },
+    
+    backBtn: {
+        width: 40,
+        height: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+
+    backIcon: {
+        fontSize: 32,
+        color: '#1a1a2e',
     },
 
     card: {
@@ -129,7 +150,7 @@ export const styles = StyleSheet.create({
     },
 
     buttonDisabled: {
-        backgroundColor: '#a5b4fc',
+        backgroundColor: '#B6CAF3',
     },
 
     buttonText: {

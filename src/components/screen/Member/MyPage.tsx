@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import {
     View,
     Text,
+    Image,
     TouchableOpacity,
     ScrollView,
 } from 'react-native';
@@ -38,9 +39,6 @@ export default function Mypage({ navigation, route }: Props) {
     // 유저 정보
     const user = route.params;
     const isCEO = user.member.type === 'CEO';
-    
-    const [myProducts, setMyProducts] = useState<any[]>([]);
-    const [myFundings, setMyFundings] = useState<any[]>([]);
 
     useEffect(() => {
         const loadDashboard = async () => {
@@ -122,16 +120,39 @@ export default function Mypage({ navigation, route }: Props) {
 
 
 {/* PROFILE CARD */}
-<View style={styles.profileCard}>
+<View
+    style={[styles.profileCard,
+        isCEO ? styles.ibkDeepBlueView : styles.ibkBlueView]
+    }
+>
 
     {/* 상단 */}
     <View style={styles.profileTop}>
 
         {/* 프로필 원 */}
+        {/*
         <View style={styles.profileCircle}>
             <Text style={styles.profileInitial}>
                 {user.member.nickname.charAt(0)}
             </Text>
+        </View>
+        */}
+        <View style={styles.profileWrapper}>
+            { isCEO
+                ? (
+                    <Image
+                        source={require('../../../assets/brand/logo-profile-deepblue.png')}
+                        style={styles.profileImageDeepBlue}
+                        resizeMode="cover"
+                    />
+                ) : (
+                    <Image
+                        source={require('../../../assets/brand/logo-profile-blue.png')}
+                        style={styles.profileImageBlue}
+                        resizeMode="cover"
+                    />
+                )
+            }
         </View>
 
         {/* 유저 정보 */}
@@ -177,106 +198,71 @@ export default function Mypage({ navigation, route }: Props) {
 
 <View style={styles.dashboardRow}>
 
-{
-    isCEO ? (
 
-        <>
 
             <TouchableOpacity
                 style={styles.dashboardCard}
-                onPress={() =>
-                    navigation.navigate('MyProductList')
+                onPress={
+                    isCEO
+                    ? () => navigation.navigate('NewProduct')
+                    : () => navigation.navigate('NewProposal')
                 }
             >
+                <Text style={styles.dashboardEmoji}>✏️</Text>
+                { isCEO ?
+                    (
+                        <>
+                        <Text style={[styles.dashboardTitle, styles.ibkDeepBlueText]}>
+                            새로운 펀딩
+                        </Text>
+                        <Text style={[styles.dashboardTitle, styles.ibkDeepBlueText]}>모집하기</Text>
+                        </>
+                    )
+                    :
+                    (
+                        <>
+                        <Text style={[styles.dashboardTitle, styles.ibkBlueText]}>
+                            새로운 제작
+                        </Text>
+                        <Text style={[styles.dashboardTitle, styles.ibkBlueText]}>요청하기</Text>
+                        </>
+                    )
 
-                <Text style={styles.dashboardEmoji}>
-                    📩
-                </Text>
-
-                <Text style={styles.dashboardTitle}>
-                    내 펀딩 모집
-                </Text>
-
-                <Text style={styles.dashboardValue}>
-                    {`${myProducts.filter( (mp) => mp.status === 'PENDING' ).length}건`}
-                </Text>
+                }
 
             </TouchableOpacity>
 
             <TouchableOpacity
                 style={styles.dashboardCard}
-                onPress={() =>
-                    navigation.navigate('MyProposalFundingList')
+                onPress={
+                    isCEO
+                    ? () => navigation.navigate('ProposalList')
+                    : () => navigation.navigate('ProductFundingList')
                 }
             >
+                <Text style={styles.dashboardEmoji}>🛒</Text>
+                { isCEO ?
+                    (
+                        <>
+                        <Text style={[styles.dashboardTitle, styles.ibkDeepBlueText]}>
+                            전체 제작 요청
+                        </Text>
+                        <Text style={[styles.dashboardTitle, styles.ibkDeepBlueText]}>보러 가기</Text>
+                        </>
+                    )
+                    :
+                    (
+                        <>
+                        <Text style={[styles.dashboardTitle, styles.ibkBlueText]}>
+                            전체 펀딩 모집
+                        </Text>
+                        <Text style={[styles.dashboardTitle, styles.ibkBlueText]}>보러 가기</Text>
+                        </>
+                    )
 
-                <Text style={styles.dashboardEmoji}>
-                    🛒
-                </Text>
-
-                <Text style={styles.dashboardTitle}>
-                    내가 제안한
-                </Text>
-
-                <Text style={styles.dashboardValue}>
-                    주문 제작
-                </Text>
-
-            </TouchableOpacity>
-
-        </>
-
-    ) : (
-
-        <>
-
-            <TouchableOpacity
-                style={styles.dashboardCard}
-                onPress={() =>
-                    navigation.navigate('MyFundingList')
                 }
-            >
-
-                <Text style={styles.dashboardEmoji}>
-                    📩
-                </Text>
-
-                <Text style={styles.dashboardTitle}>
-                    참여한 펀딩 모집
-                </Text>
-
-                <Text style={styles.dashboardValue}>
-                    {`${myFundings.filter((mf) => mf.productStatus === 'PENDING' ).length}건`}
-                </Text>
 
             </TouchableOpacity>
-
-            <TouchableOpacity
-                style={styles.dashboardCard}
-                onPress={() =>
-                    navigation.navigate('MyProposalList')
-                }
-            >
-
-                <Text style={styles.dashboardEmoji}>
-                    🛒
-                </Text>
-
-                <Text style={styles.dashboardTitle}>
-                    내가 요청한
-                </Text>
-
-                <Text style={styles.dashboardValue}>
-                    주문 제작
-                </Text>
-
-            </TouchableOpacity>
-
-        </>
-
-    )
-}
-
 </View>
 
 
@@ -286,7 +272,7 @@ export default function Mypage({ navigation, route }: Props) {
                 <View style={styles.card}>
 
                     <Text style={styles.sectionTitle}>
-                        ⚙️ 메뉴
+                        ❤️ 내 활동
                     </Text>
                     
                    <TouchableOpacity
@@ -295,87 +281,58 @@ export default function Mypage({ navigation, route }: Props) {
                             navigation.navigate('MyOrderList', { member: user.member })
                         }
                     >
-                        <Text style={styles.menuText}>
-                            📦 내 주문 현황
-                        </Text>
-
-                        <Text style={styles.arrow}>
-                            ›
-                        </Text>
+                        <Text style={styles.menuText}>📦  내 주문 현황</Text>
+                        <Text style={styles.arrow}>›</Text>
                     </TouchableOpacity>
 
-{
-    isCEO ? (
+                    { isCEO ?
+                        (<>
+                            <TouchableOpacity
+                                style={styles.menuButton}
+                                onPress={() =>
+                                    navigation.navigate('MyProductList')
+                                }
+                            >
+                                <Text style={styles.menuText}>🙋🏻  내가 모집한 펀딩 현황</Text>
+                                <Text style={styles.arrow}>›</Text>
+                            </TouchableOpacity>
 
-        <>
-            <TouchableOpacity
-                style={styles.menuButton}
-                onPress={() =>
-                    navigation.navigate('NewProduct')
-                }
-            >
-                <Text style={styles.menuText}>
-                    📦 새 공동구매 모집
-                </Text>
+                            <TouchableOpacity
+                                style={styles.menuButton}
+                                onPress={() =>
+                                    navigation.navigate('MyProposalFundingList')
+                                }
+                            >
+                                <Text style={styles.menuText}>⭐️  내 제작 제안 현황</Text>
+                                <Text style={styles.arrow}>›</Text>
+                            </TouchableOpacity>
+                        </>
 
-                <Text style={styles.arrow}>
-                    ›
-                </Text>
-            </TouchableOpacity>
+                        ) : (
 
-            <TouchableOpacity
-                style={styles.menuButton}
-                onPress={() =>
-                    navigation.navigate('ProposalList')
-                }
-            >
-                <Text style={styles.menuText}>
-                    🛒 전체 제작 요청 보러가기
-                </Text>
+                        <>
+                            <TouchableOpacity
+                                style={styles.menuButton}
+                                onPress={() =>
+                                    navigation.navigate('MyProposalList')
+                                }
+                            >
+                                <Text style={styles.menuText}>🙋🏻  내 주문제작 요청 현황</Text>
+                                <Text style={styles.arrow}>›</Text>
+                            </TouchableOpacity>
 
-                <Text style={styles.arrow}>
-                    ›
-                </Text>
-            </TouchableOpacity>
-        </>
-
-    ) : (
-
-        <>
-            <TouchableOpacity
-                style={styles.menuButton}
-                onPress={() =>
-                    navigation.navigate('NewProposal')
-                }
-            >
-                <Text style={styles.menuText}>
-                    📩 구매 요청 글 쓰기
-                </Text>
-
-                <Text style={styles.arrow}>
-                    ›
-                </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-                style={styles.menuButton}
-                onPress={() =>
-                    navigation.navigate('ProductFundingList')
-                }
-            >
-                <Text style={styles.menuText}>
-                    🛒 전체 펀딩 보러가기
-                </Text>
-
-                <Text style={styles.arrow}>
-                    ›
-                </Text>
-            </TouchableOpacity>
-        </>
-
-    )
-}
-
+                            <TouchableOpacity
+                                style={styles.menuButton}
+                                onPress={() =>
+                                    navigation.navigate('ProductFundingList')
+                                }
+                            >
+                                <Text style={styles.menuText}>⭐️  내가 참여한 펀딩 목록</Text>
+                                <Text style={styles.arrow}>›</Text>
+                            </TouchableOpacity>
+                        </>
+                        )
+                    }
                 </View>
 
             </ScrollView>

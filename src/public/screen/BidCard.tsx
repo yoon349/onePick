@@ -34,7 +34,6 @@ function Categories({ category }: { category: BidCategory }) {
 
 
 export default function BidCard({
-    id,
     title,
     category,
     valueString,

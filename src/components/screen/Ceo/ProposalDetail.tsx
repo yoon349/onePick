@@ -19,10 +19,15 @@ import { postProposalFunding } from '../../../api/ProposalFunding/postProposalFu
 
 import { api } from '../../../api/axios';
 
+import StatusBadge from '../../../public/screen/StatusBadge';
+
+
+
 type Props = {
   navigation: NativeStackNavigationProp<RootStackParamList>;
   route:      RouteProp<RootStackParamList, 'ProposalDetail'>;
 };
+
 
 const CATEGORY_LABELS: Record<string, string> = {
   FOOD: '식품', FURNITURE: '가구', DIGITAL: '디지털',
@@ -205,6 +210,10 @@ export default function ProposalDetail({ navigation, route }: Props) {
               <Text style={styles.aiBadgeText}>🤖 AI 생성</Text>
             </View>
           )}
+
+          <View style={styles.badgeWrapper}>
+            <StatusBadge status={proposal?.proposalStatus}/>
+          </View>
         </View>
 
         {/* 기본 정보 */}
@@ -233,6 +242,7 @@ export default function ProposalDetail({ navigation, route }: Props) {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>📊 요청 정보</Text>
           <View style={styles.infoGrid}>
+          <View style={styles.infoGrid}>
             <InfoItem
               label="마감 기한"
               value={
@@ -243,9 +253,13 @@ export default function ProposalDetail({ navigation, route }: Props) {
                 : `${Math.abs(proposal?.remainingDeadlineDays)}일 경과`
               }
             />
-            <InfoItem label="입찰 수"   value={`${proposal?.fundingCount}건`} />
-            <InfoItem label="상태"      value={proposal?.proposalStatus === 'PENDING' ? '진행중' : '완료'} />
+            <InfoItem label="최대 가격"   value={`${proposal?.maxPrice.toLocaleString()}원`} />
+            <InfoItem
+              label="받은 제안 수"
+              value={`${proposal?.fundingCount}개`}
+            />
             <InfoItem label="등록일"    value={proposal?.createdAt?.slice(0, 10) ?? '-'} />
+          </View>
           </View>
         </View>
 
@@ -409,12 +423,36 @@ const styles = StyleSheet.create({
     color: '#1a1a2e',
   },
 
-  headerTitle: { fontSize: 22, fontWeight: '700', color: '#1a1a2e' },
+  headerTitle: {
+    marginTop: 4,
+    fontSize: 22,
+    fontWeight: '700',
+    color: '#1a1a2e',
+  },
 
   imageBox: {
+    position: 'relative',
     height: 240,
-    backgroundColor: '#fff', position: 'relative'
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'hidden',
   },
+
+  imageEmoji: {
+    fontSize: 100,
+  },
+  
+  badgeWrapper: {
+    position: 'absolute',
+    top: 186,
+    right: 24,
+    zIndex: 20,
+},
+
+
+
+
   productImage:         { width: '100%', height: '100%' },
   imagePlaceholder:     { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 8 },
   imagePlaceholderEmoji:{ fontSize: 60 },
@@ -431,8 +469,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 4,
     alignSelf: 'flex-start',
+    marginTop: 2,
     marginLeft: 15,
-    marginBottom: 8
   },
   categoryBadgeText: { fontSize: 12, color: 'gray', fontWeight: '600' },
 
