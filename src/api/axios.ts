@@ -44,9 +44,21 @@ const applyRequestHeader = (
 
 const extractSetCookieHeader = (response: AxiosResponse | Response): string | undefined => {
     if (response instanceof Response) {
-        const fetchHeader = response.headers.get('set-cookie');
-        if (fetchHeader) {
-            return fetchHeader;
+        const directHeader =
+            response.headers.get('set-cookie') ??
+            response.headers.get('Set-Cookie');
+        if (directHeader) {
+            return directHeader;
+        }
+
+        const collected: string[] = [];
+        response.headers.forEach((value, key) => {
+            if (key.toLowerCase() === 'set-cookie') {
+                collected.push(value);
+            }
+        });
+        if (collected.length > 0) {
+            return collected[0];
         }
 
         return undefined;
@@ -86,8 +98,14 @@ const persistSessionCookie = async (
     setCookieHeader?: string,
 ): Promise<void> => {
     if (setCookieHeader) {
-        await CookieManager.setFromResponse(API_BASE_URL, setCookieHeader);
-    } else if (CookieManager.set) {
+        try {
+            await CookieManager.setFromResponse(API_BASE_URL, setCookieHeader);
+        } catch {
+            // Fall through to explicit set below.
+        }
+    }
+
+    if (CookieManager.set) {
         await CookieManager.set(API_BASE_URL, {
             name: 'JSESSIONID',
             value: sessionId,
@@ -183,6 +201,7 @@ export const getJSessionId = async (): Promise<string | null> => {
 };
 
 export const getSessionHeaders = async (): Promise<Record<string, string>> => {
+    await ensureSessionReady();
     const jsessionid = getMemorySessionId() ?? (await getJSessionId());
     return jsessionid ? { Cookie: `JSESSIONID=${jsessionid}` } : {};
 };

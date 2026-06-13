@@ -16,7 +16,7 @@ import {
     StyleSheet,
     ScrollView,
 } from 'react-native';
-import { launchImageLibrary } from 'react-native-image-picker';
+import { pickImagesFromLibrary } from '../../../utils/pickImages';
 
 import FormScrollView from '../../common/FormScrollView';
 import { Dropdown } from 'react-native-element-dropdown';
@@ -136,19 +136,17 @@ export default function NewProposal({ navigation, route }: Props) {
     };
 
     const handlePickImage = async () => {
-        const result = await launchImageLibrary({
-            mediaType: 'photo',
-            selectionLimit: 5,
-        });
-        if (result.didCancel) return;
-        if (result.assets) {
-            const newImages = result.assets.map((asset) => ({
-                uri:  asset.uri,
-                name: asset.fileName,
-                type: asset.type,
-            }));
-            setImageMetas((prev) => [...prev, ...newImages]);
+        const assets = await pickImagesFromLibrary(5);
+        if (assets.length === 0) {
+            return;
         }
+
+        const newImages = assets.map((asset) => ({
+            uri:  asset.uri,
+            name: asset.fileName ?? `photo-${Date.now()}.jpg`,
+            type: asset.type ?? 'image/jpeg',
+        }));
+        setImageMetas((prev) => [...prev, ...newImages]);
     };
 
     return (

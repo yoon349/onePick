@@ -1,7 +1,12 @@
-import { api } from '../axios';
+import { api, getSessionHeaders, requireSessionReady } from '../axios';
 
 export const getMyProposals = async () => {
-    const response = await api.get(`/api/v1/proposals/me`);
+    await requireSessionReady();
+    const sessionHeaders = await getSessionHeaders();
+
+    const response = await api.get(`/api/v1/proposals/me`, {
+        headers: sessionHeaders,
+    });
 
     return response.data;
 };
