@@ -54,9 +54,11 @@ const webCookieManager = {
     },
 };
 
+const nativeCookieManager = require('@react-native-cookies/cookies') as typeof webCookieManager;
+
 const CookieManager =
     Platform.OS === 'web'
         ? webCookieManager
-        : require('@react-native-cookies/cookies').default;
+        : nativeCookieManager;
 
 export default CookieManager;
