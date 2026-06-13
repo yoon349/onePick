@@ -273,6 +273,21 @@ export default function Mypage({ navigation, route }: Props) {
                     <Text style={styles.sectionTitle}>
                         ⚙️ 메뉴
                     </Text>
+                    
+                   <TouchableOpacity
+                        style={styles.menuButton}
+                        onPress={() =>
+                            navigation.navigate('MyOrderList', { member: user.member })
+                        }
+                    >
+                        <Text style={styles.menuText}>
+                            📦 내 주문 현황
+                        </Text>
+
+                        <Text style={styles.arrow}>
+                            ›
+                        </Text>
+                    </TouchableOpacity>
 
 {
     isCEO ? (
