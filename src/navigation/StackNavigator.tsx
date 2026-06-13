@@ -7,6 +7,7 @@ import MyPage from '../components/screen/Member/MyPage'
 import SplashScreen from '../components/screen/SplashScreen'
 
 import NewProposal from '../components/screen/Individual/NewProposal'
+import ProposalSketchScreen from '../components/screen/Individual/ProposalSketchScreen'
 import ProductFundingList from '../components/screen/Individual/ProductFundingList'
 import ProductFundingDetail from '../components/screen/Individual/ProductFundingDetail'
 import MyFundingList from '../components/screen/Individual/MyFundingList'
@@ -57,7 +58,13 @@ export type RootStackParamList = {
     member: Member;
   };
 
-  NewProposal: undefined;
+  NewProposal: {
+    sketchB64?: string;
+    sketchPrompt?: string;
+  } | undefined;
+  ProposalSketchScreen: {
+    initialPrompt?: string;
+  };
   ProductFundingList: undefined;
   ProductFundingDetail: {
     isMine: boolean,
@@ -139,6 +146,10 @@ export default function StackNavigator() {
       <Stack.Screen
         name="NewProposal"
         component={NewProposal}
+      />
+      <Stack.Screen
+        name="ProposalSketchScreen"
+        component={ProposalSketchScreen}
       />
       <Stack.Screen
         name="ProductFundingList"

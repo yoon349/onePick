@@ -3,7 +3,7 @@
 // 탭 1: 이미지 업로드 / 탭 2: 스케치
 
 import axios from 'axios';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Alert,
     Text,
@@ -16,19 +16,23 @@ import {
     StyleSheet,
     ScrollView,
 } from 'react-native';
+import { launchImageLibrary } from 'react-native-image-picker';
 
 import FormScrollView from '../../common/FormScrollView';
 import { Dropdown } from 'react-native-element-dropdown';
-import SignatureCanvas from 'react-native-signature-canvas';
 
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../../../navigation/StackNavigator';
 import { styles } from './NewProposalStyle';
 import { postProposal } from '../../../api/Proposal/postProposal';
 import { filterDigitsOnly, parsePositiveInt } from '../../../utils/numericInput';
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>;
-type Props = { navigation: HomeScreenNavigationProp; };
+type Props = {
+    navigation: HomeScreenNavigationProp;
+    route: RouteProp<RootStackParamList, 'NewProposal'>;
+};
 type TabType = 'image' | 'sketch';
 
 const categories = [
@@ -40,9 +44,8 @@ const categories = [
     { label: '기타',      value: 'ETC' },
 ];
 
-export default function NewProposal({ navigation }: Props) {
+export default function NewProposal({ navigation, route }: Props) {
 
-    const signatureRef                    = useRef<any>(null);
     const [activeTab, setActiveTab]       = useState<TabType>('image');
     const [fulfilled, setFulfilled]       = useState(false);
     const [title, setTitle]               = useState('');
@@ -52,8 +55,17 @@ export default function NewProposal({ navigation }: Props) {
     const [deadlineDays, setDeadlineDays] = useState('');
     const [imageMetas, setImageMetas]     = useState<any[]>([]);
     const [sketchB64, setSketchB64]       = useState<string | null>(null);
-    const [hasDrawn, setHasDrawn]         = useState(false);
     const [prompt, setPrompt]             = useState('');
+
+    useEffect(() => {
+        if (route.params?.sketchB64) {
+            setSketchB64(route.params.sketchB64);
+            setActiveTab('sketch');
+        }
+        if (route.params?.sketchPrompt !== undefined) {
+            setPrompt(route.params.sketchPrompt);
+        }
+    }, [route.params?.sketchB64, route.params?.sketchPrompt]);
 
     useEffect(() => {
         const maxPriceValue = parsePositiveInt(maxPrice);
@@ -67,6 +79,10 @@ export default function NewProposal({ navigation }: Props) {
         setFulfilled(isFilled);
     }, [title, content, category, maxPrice, deadlineDays]);
 
+    const openSketchScreen = () => {
+        navigation.navigate('ProposalSketchScreen', { initialPrompt: prompt });
+    };
+
     const handleSubmit = async () => {
         try {
             const parsedMaxPrice = parsePositiveInt(maxPrice);
@@ -76,12 +92,11 @@ export default function NewProposal({ navigation }: Props) {
                 Alert.alert('입력 오류', '가격과 마감 기한은 숫자만 입력해 주세요.');
                 return;
             }
-            // ✅ 탭에 따라 다른 imageMetas 구성
             let finalImageMetas = imageMetas;
 
             if (activeTab === 'sketch') {
                 if (!sketchB64) {
-                    Alert.alert('스케치를 저장해 주세요.');
+                    Alert.alert('스케치 필요', '스케치 그리기 화면에서 스케치를 저장해 주세요.');
                     return;
                 }
                 finalImageMetas = [{
@@ -102,9 +117,7 @@ export default function NewProposal({ navigation }: Props) {
                 imageMetas:   finalImageMetas,
             };
 
-            console.log(body);
             const result = await postProposal(body);
-            console.log(result);
 
             if (result.success) {
                 Alert.alert('등록 완료', '구매 요청이 성공적으로 등록되었습니다.');
@@ -115,7 +128,6 @@ export default function NewProposal({ navigation }: Props) {
 
         } catch (error) {
             if (axios.isAxiosError(error)) {
-                console.log(error);
                 Alert.alert('에러 발생', JSON.stringify(error.response?.data) || error.message);
             } else {
                 Alert.alert('에러 발생', '알 수 없는 오류');
@@ -124,7 +136,7 @@ export default function NewProposal({ navigation }: Props) {
     };
 
     const handlePickImage = async () => {
-        const result = await ImagePicker.launchImageLibrary({
+        const result = await launchImageLibrary({
             mediaType: 'photo',
             selectionLimit: 5,
         });
@@ -139,23 +151,6 @@ export default function NewProposal({ navigation }: Props) {
         }
     };
 
-    const handleSignature = (sig: string) => {
-        setSketchB64(sig.replace('data:image/png;base64,', ''));
-        setHasDrawn(true);
-    };
-
-    const handleClearSketch = () => {
-        signatureRef.current?.clearSignature();
-        setSketchB64(null);
-        setHasDrawn(false);
-    };
-
-    const canvasStyle = `
-        .m-signature-pad { border: none; box-shadow: none; }
-        .m-signature-pad--body { border: none; }
-        body { background: #ffffff; }
-    `;
-
     return (
         <KeyboardAvoidingView
             style={styles.container}
@@ -163,16 +158,13 @@ export default function NewProposal({ navigation }: Props) {
         >
             <FormScrollView contentContainerStyle={styles.scroll}>
 
-                {/* HEADER */}
                 <View style={styles.header}>
                     <View style={styles.btnView}>
                         <TouchableOpacity
                             onPress={() => {navigation.goBack()}}
                             style={styles.backBtn}
                         >
-                            <Text style={styles.backIcon}>
-                                ←
-                            </Text>
+                            <Text style={styles.backIcon}>←</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.headerView}>
@@ -181,7 +173,6 @@ export default function NewProposal({ navigation }: Props) {
                     </View>
                 </View>
 
-                {/* 탭 */}
                 <View style={tabStyles.tabRow}>
                     <TouchableOpacity
                         style={[tabStyles.tab, activeTab === 'image' && tabStyles.tabActive]}
@@ -201,7 +192,6 @@ export default function NewProposal({ navigation }: Props) {
                     </TouchableOpacity>
                 </View>
 
-                {/* CARD */}
                 <View style={styles.card}>
                     <Text style={styles.sectionTitle}>📦 상품 정보</Text>
 
@@ -210,7 +200,6 @@ export default function NewProposal({ navigation }: Props) {
                     <InputField label="가격"      placeholder="최대 가격 입력" value={maxPrice}     onChangeText={(text: string) => setMaxPrice(filterDigitsOnly(text))} numeric />
                     <InputField label="마감 기한" placeholder="일 단위 입력"   value={deadlineDays} onChangeText={(text: string) => setDeadlineDays(filterDigitsOnly(text))} numeric />
 
-                    {/* 카테고리 */}
                     <View style={styles.inputGroup}>
                         <Text style={styles.inputLabel}>카테고리</Text>
                         <Dropdown
@@ -228,7 +217,6 @@ export default function NewProposal({ navigation }: Props) {
                         />
                     </View>
 
-                    {/* ── 탭 1: 이미지 업로드 ── */}
                     {activeTab === 'image' && (
                         <View style={styles.inputGroup}>
                             <Text style={styles.inputLabel}>상품 이미지</Text>
@@ -256,62 +244,49 @@ export default function NewProposal({ navigation }: Props) {
                         </View>
                     )}
 
-                    {/* ── 탭 2: 스케치 ── */}
                     {activeTab === 'sketch' && (
                         <View style={styles.inputGroup}>
-                            <View style={tabStyles.sketchHeader}>
-                                <Text style={styles.inputLabel}>스케치</Text>
-                                <TouchableOpacity style={tabStyles.clearBtn} onPress={handleClearSketch}>
-                                    <Text style={tabStyles.clearBtnText}>지우기</Text>
-                                </TouchableOpacity>
-                            </View>
+                            <Text style={styles.inputLabel}>스케치</Text>
+                            <Text style={tabStyles.sketchHint}>
+                                별도 화면에서 스케치를 그려 주세요.
+                            </Text>
 
-                            <View style={tabStyles.canvasWrapper}>
-                                <SignatureCanvas
-                                    ref={signatureRef}
-                                    onOK={handleSignature}
-                                    onBegin={() => setHasDrawn(true)}
-                                    webStyle={canvasStyle}
-                                    backgroundColor="white"
-                                    penColor="black"
-                                    dotSize={3}
-                                    minWidth={2}
-                                    maxWidth={4}
-                                    style={{ flex: 1 }}
-                                    autoClear={false}
-                                    imageType="image/png"
-                                    descriptionText=""
-                                    clearText="지우기"
-                                    confirmText="저장"
-                                />
-                            </View>
-
-                            {hasDrawn && (
-                                <TouchableOpacity
-                                    style={tabStyles.saveBtn}
-                                    onPress={() => signatureRef.current?.readSignature()}
-                                >
-                                    <Text style={tabStyles.saveBtnText}>
-                                        {sketchB64 ? '✅ 스케치 저장됨' : '스케치 저장'}
-                                    </Text>
-                                </TouchableOpacity>
+                            {sketchB64 ? (
+                                <View style={tabStyles.sketchPreviewWrap}>
+                                    <Image
+                                        source={{ uri: `data:image/png;base64,${sketchB64}` }}
+                                        style={tabStyles.sketchPreview}
+                                    />
+                                    <Text style={tabStyles.sketchSavedText}>✅ 스케치 저장됨</Text>
+                                </View>
+                            ) : (
+                                <View style={tabStyles.sketchEmptyBox}>
+                                    <Text style={tabStyles.sketchEmptyText}>아직 스케치가 없어요</Text>
+                                </View>
                             )}
 
+                            <TouchableOpacity style={tabStyles.sketchBtn} onPress={openSketchScreen}>
+                                <Text style={tabStyles.sketchBtnText}>
+                                    {sketchB64 ? '✏️ 스케치 다시 그리기' : '✏️ 스케치 그리기'}
+                                </Text>
+                            </TouchableOpacity>
+
                             <View style={tabStyles.promptGroup}>
-                                <Text style={styles.inputLabel}>AI 프롬프트 (영문 권장)</Text>
+                                <Text style={styles.inputLabel}>AI 프롬프트</Text>
                                 <TextInput
                                     style={styles.input}
-                                    placeholder="예: wireless earphone, white, studio lighting"
+                                    placeholder="예: 흰색 무선 이어폰, 스튜디오 조명"
                                     placeholderTextColor="#aaa"
                                     value={prompt}
                                     onChangeText={setPrompt}
+                                    multiline
+                                    textAlignVertical="top"
                                 />
                             </View>
                         </View>
                     )}
                 </View>
 
-                {/* BUTTON */}
                 <TouchableOpacity
                     disabled={!fulfilled}
                     style={[styles.button, !fulfilled && styles.buttonDisabled]}
@@ -361,23 +336,46 @@ const tabStyles = StyleSheet.create({
     tabActive:     { backgroundColor: '#0076F0' },
     tabText:       { fontSize: 14, color: '#888', fontWeight: '500' },
     tabTextActive: { color: '#fff', fontWeight: '700' },
-    sketchHeader: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginBottom: 8,
+    sketchHint: {
+        fontSize: 13,
+        color: '#666',
+        marginBottom: 12,
+        lineHeight: 18,
     },
-    canvasWrapper: {
-        height: 260,
+    sketchEmptyBox: {
+        height: 160,
         borderWidth: 1.5,
         borderColor: '#e0e0e0',
         borderRadius: 12,
-        overflow: 'hidden',
+        borderStyle: 'dashed',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#fafafa',
+        marginBottom: 12,
+    },
+    sketchEmptyText: { fontSize: 14, color: '#888' },
+    sketchPreviewWrap: { marginBottom: 12, alignItems: 'center' },
+    sketchPreview: {
+        width: '100%',
+        height: 160,
+        borderRadius: 12,
+        borderWidth: 1,
+        borderColor: '#e0e0e0',
         backgroundColor: '#fff',
     },
-    clearBtn:     { backgroundColor: '#fee2e2', paddingHorizontal: 14, paddingVertical: 6, borderRadius: 8 },
-    clearBtnText: { color: '#ef4444', fontSize: 13, fontWeight: '600' },
-    saveBtn:      { marginTop: 10, backgroundColor: '#eef2ff', borderRadius: 10, paddingVertical: 10, alignItems: 'center' },
-    saveBtnText:  { color: '#0076F0', fontSize: 14, fontWeight: '600' },
+    sketchSavedText: {
+        marginTop: 8,
+        fontSize: 13,
+        fontWeight: '600',
+        color: '#0076F0',
+    },
+    sketchBtn: {
+        backgroundColor: '#eef2ff',
+        borderRadius: 12,
+        paddingVertical: 14,
+        alignItems: 'center',
+        marginBottom: 4,
+    },
+    sketchBtnText: { color: '#0076F0', fontSize: 15, fontWeight: '700' },
     promptGroup:  { marginTop: 14 },
 });
