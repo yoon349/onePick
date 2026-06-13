@@ -165,6 +165,8 @@ export default function ProposalDetail({ navigation, route }: Props) {
     (img: any) => img.aiStatus === 'QUEUED' || img.aiStatus === 'RUNNING'
   );
 
+  const isBidClosed = proposal?.proposalStatus !== 'PENDING';
+
   return (
     <View style={styles.container}>
       <FormScrollView
@@ -215,7 +217,9 @@ export default function ProposalDetail({ navigation, route }: Props) {
               </Text>
             </View>
           </View>
-          <Text style={styles.price}>{proposal?.maxPrice?.toLocaleString()}원</Text>
+          <Text style={styles.price}>
+            {proposal?.maxPrice != null ? `${proposal.maxPrice.toLocaleString()}원` : '-'}
+          </Text>
           <Text style={styles.seller}>by {proposal?.writerNickname}</Text>
         </View>
 
@@ -248,6 +252,11 @@ export default function ProposalDetail({ navigation, route }: Props) {
         {/* 입찰 요청 목록 */}
         { request.isMine ?
         (<View style={styles.section}>
+          {isBidClosed && (
+            <View style={styles.closedBanner}>
+              <Text style={styles.closedBannerText}>입찰이 종료되었어요.</Text>
+            </View>
+          )}
           <Text style={styles.sectionTitle}>📩 제작 제안 목록</Text>
           {proposalFundings.length === 0 ? (
             <Text style={styles.emptyText}>아직 받은 제안이 없어요</Text>
@@ -263,16 +272,18 @@ export default function ProposalDetail({ navigation, route }: Props) {
                 </View>
                 <View style={styles.fundingBtns}>
                   <TouchableOpacity
-                    style={styles.rejectBtn}
+                    style={[styles.rejectBtn, isBidClosed && styles.actionBtnDisabled]}
+                    disabled={isBidClosed}
                     onPress={() => handleReject(funding.proposalFundingId)}
                   >
-                    <Text style={styles.rejectBtnText}>거절</Text>
+                    <Text style={[styles.rejectBtnText, isBidClosed && styles.actionBtnTextDisabled]}>거절</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
-                    style={styles.acceptBtn}
+                    style={[styles.acceptBtn, isBidClosed && styles.actionBtnDisabled]}
+                    disabled={isBidClosed}
                     onPress={() => handleAccept(funding.proposalFundingId)}
                   >
-                    <Text style={styles.acceptBtnText}>수락</Text>
+                    <Text style={[styles.acceptBtnText, isBidClosed && styles.actionBtnTextDisabled]}>수락</Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -468,6 +479,21 @@ const styles = StyleSheet.create({
   rejectBtnText:   { color: '#ef4444', fontSize: 13, fontWeight: '600' },
   acceptBtn:       { borderWidth: 1, borderColor: '#065f46', borderRadius: 8, paddingHorizontal: 12, paddingVertical: 6 },
   acceptBtnText:   { color: '#065f46', fontSize: 13, fontWeight: '600' },
+  actionBtnDisabled: { opacity: 0.45, borderColor: '#cbd5e1' },
+  actionBtnTextDisabled: { color: '#94a3b8' },
+  closedBanner: {
+    backgroundColor: '#eef2ff',
+    borderRadius: 12,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    marginBottom: 12,
+  },
+  closedBannerText: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#0076F0',
+    textAlign: 'center',
+  },
 
   // 모달
   modalOverlay: {

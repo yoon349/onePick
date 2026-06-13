@@ -22,6 +22,7 @@ import BidCard from '../../../public/screen/BidCard';
 
 import { getMyFundings } from '../../../api/Product/getMyFundings';
 import { deleteApplyFunding } from '../../../api/Product/deleteApplyFunding';
+import { requireSessionReady } from '../../../api/axios';
 
 type HomeScreenNavigationProp =
   NativeStackNavigationProp<RootStackParamList>;
@@ -146,8 +147,17 @@ export default function MyFundingList({ navigation }: Props) {
     const [myFundings, setMyFundings] = useState<any[]>([]);
     
     useEffect(() => {
-        fetchMyFundingList();
-    }, []);
+        const load = async () => {
+            try {
+                await requireSessionReady();
+            } catch {
+                navigation.replace('Login');
+                return;
+            }
+            await fetchMyFundingList();
+        };
+        load();
+    }, [navigation]);
     
     const fetchMyFundingList = async () => {
         try {

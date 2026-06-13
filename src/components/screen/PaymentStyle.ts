@@ -16,9 +16,27 @@ export const styles = StyleSheet.create({
     },
 
     header: {
-        left: 15,
+        flexDirection: 'row',
+        alignItems: 'flex-start',
         marginTop: SCREEN_HEADER_TOP,
         marginBottom: 24,
+        gap: 8,
+    },
+
+    backBtn: {
+        width: 40,
+        height: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+
+    backIcon: {
+        fontSize: 28,
+        color: '#1a1a2e',
+    },
+
+    headerTextWrap: {
+        flex: 1,
     },
 
     headerTitle: {

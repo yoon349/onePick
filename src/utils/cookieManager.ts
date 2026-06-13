@@ -3,6 +3,22 @@ import { Platform } from 'react-native';
 type CookieRecord = { value: string };
 type CookieMap = Record<string, CookieRecord>;
 
+type NativeCookieInput = {
+    name: string;
+    value: string;
+    path?: string;
+    domain?: string;
+};
+
+type CookieManagerLike = {
+    getAll: () => Promise<CookieMap>;
+    get: (url: string) => Promise<CookieMap>;
+    set?: (url: string, cookie: NativeCookieInput) => Promise<boolean>;
+    setFromResponse: (url: string, header: string) => Promise<boolean>;
+    clearAll?: () => Promise<boolean>;
+    flush?: () => Promise<void>;
+};
+
 const getDocument = (): { cookie: string } | undefined => {
     if (typeof globalThis === 'undefined' || !('document' in globalThis)) {
         return undefined;
@@ -35,9 +51,18 @@ const parseDocumentCookies = (): CookieMap => {
     }, {});
 };
 
-const webCookieManager = {
+const webCookieManager: CookieManagerLike = {
     getAll: async (): Promise<CookieMap> => parseDocumentCookies(),
     get: async (_url: string): Promise<CookieMap> => parseDocumentCookies(),
+    set: async (_url: string, cookie: NativeCookieInput): Promise<boolean> => {
+        const documentRef = getDocument();
+        if (!documentRef) {
+            return false;
+        }
+
+        documentRef.cookie = `${cookie.name}=${encodeURIComponent(cookie.value)}; path=${cookie.path ?? '/'}`;
+        return true;
+    },
     setFromResponse: async (_url: string, header: string): Promise<boolean> => {
         const documentRef = getDocument();
         if (!documentRef) {
@@ -52,11 +77,25 @@ const webCookieManager = {
         documentRef.cookie = `${cookiePart}; path=/`;
         return true;
     },
+    clearAll: async (): Promise<boolean> => {
+        const documentRef = getDocument();
+        if (!documentRef) {
+            return false;
+        }
+
+        documentRef.cookie.split(';').forEach((part) => {
+            const name = part.split('=')[0]?.trim();
+            if (name) {
+                documentRef.cookie = `${name}=; Max-Age=0; path=/`;
+            }
+        });
+        return true;
+    },
 };
 
-const nativeCookieManager = require('@react-native-cookies/cookies') as typeof webCookieManager;
+const nativeCookieManager = require('@react-native-cookies/cookies') as CookieManagerLike;
 
-const CookieManager =
+const CookieManager: CookieManagerLike =
     Platform.OS === 'web'
         ? webCookieManager
         : nativeCookieManager;

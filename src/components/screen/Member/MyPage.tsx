@@ -13,6 +13,7 @@ import { RouteProp } from '@react-navigation/native';
 
 import { getMyProducts } from '../../../api/Product/getMyProducts';
 import { getMyFundings } from '../../../api/Product/getMyFundings';
+import { requireSessionReady } from '../../../api/axios';
 
 import { styles } from './MyPageStyle';
 
@@ -42,9 +43,23 @@ export default function Mypage({ navigation, route }: Props) {
     const [myFundings, setMyFundings] = useState<any[]>([]);
 
     useEffect(() => {
-        fetchMyProductList();
-        fetchMyFundingList();
-    }, []);
+        const loadDashboard = async () => {
+            try {
+                await requireSessionReady();
+            } catch {
+                navigation.replace('Login');
+                return;
+            }
+
+            if (isCEO) {
+                await fetchMyProductList();
+            } else {
+                await fetchMyFundingList();
+            }
+        };
+
+        loadDashboard();
+    }, [isCEO, navigation]);
     
     const fetchMyProductList = async () => {
         try {

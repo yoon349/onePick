@@ -1,7 +1,12 @@
-import { api } from '../axios';
+import { api, getSessionHeaders, requireSessionReady } from '../axios';
 
 export const getMyProducts = async () => {
-    const response = await api.get(`/api/v1/product/me`);
+    await requireSessionReady();
+    const sessionHeaders = await getSessionHeaders();
+
+    const response = await api.get(`/api/v1/product/me`, {
+        headers: sessionHeaders,
+    });
 
     return response.data;
 };

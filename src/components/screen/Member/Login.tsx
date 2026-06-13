@@ -17,6 +17,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../navigation/StackNavigator';
 import { postLogin } from '../../../api/Member/postLogin';
 import { getApiErrorMessage } from '../../../utils/apiError';
+import { SessionNotReadyError } from '../../../api/axios';
 import OnePickLogo from '../../brand/OnePickLogo';
 import SafeScreen from '../../common/SafeScreen';
 import { styles } from './LoginStyle';
@@ -30,12 +31,18 @@ type Props = {
 export default function Login({ navigation }: Props) {
   const [fulfilled, setFulfilled] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     setFulfilled(phoneNumber.trim() !== '');
   }, [phoneNumber]);
 
   const handleLogin = async () => {
+    if (isSubmitting) {
+      return;
+    }
+
+    setIsSubmitting(true);
     try {
       const result = await postLogin({ phoneNumber });
 
@@ -46,7 +53,13 @@ export default function Login({ navigation }: Props) {
 
       navigation.replace('MyPage', { member: result.data });
     } catch (error) {
+      if (error instanceof SessionNotReadyError) {
+        Alert.alert('세션 오류', error.message);
+        return;
+      }
       Alert.alert('에러 발생', getApiErrorMessage(error, '로그인 실패'));
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -77,7 +90,7 @@ export default function Login({ navigation }: Props) {
             <Text style={styles.inputLabel}>휴대폰번호</Text>
             <TextInput
               style={styles.input}
-              placeholder="01012345678"
+              placeholder="01011112222"
               placeholderTextColor="#9AA8B8"
               keyboardType="phone-pad"
               inputAccessoryViewID={
@@ -89,11 +102,11 @@ export default function Login({ navigation }: Props) {
           </View>
 
           <TouchableOpacity
-            disabled={!fulfilled}
-            style={[styles.button, !fulfilled && styles.buttonDisabled]}
+            disabled={!fulfilled || isSubmitting}
+            style={[styles.button, (!fulfilled || isSubmitting) && styles.buttonDisabled]}
             onPress={handleLogin}
           >
-            <Text style={styles.buttonText}>로그인</Text>
+            <Text style={styles.buttonText}>{isSubmitting ? '로그인 중...' : '로그인'}</Text>
           </TouchableOpacity>
         </ScrollView>
       </KeyboardAvoidingView>

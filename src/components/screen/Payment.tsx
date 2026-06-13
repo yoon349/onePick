@@ -9,6 +9,8 @@ import {
     Text,
     TouchableOpacity,
     ScrollView,
+    Pressable,
+    Keyboard,
 } from 'react-native';
 
 import {
@@ -89,10 +91,9 @@ export default function Payment({ navigation, route }: Props) {
         }
     };
       
-    fetchPayment();
-
-    
-
+    useEffect(() => {
+        fetchPayment();
+    }, []);
 
     const handleApply = async () => {
         try {
@@ -137,11 +138,23 @@ export default function Payment({ navigation, route }: Props) {
             <ScrollView
                 contentContainerStyle={styles.scroll}
                 showsVerticalScrollIndicator={false}
+                keyboardShouldPersistTaps="handled"
+                keyboardDismissMode="on-drag"
             >
+                <Pressable onPress={Keyboard.dismiss}>
 
                 {/* HEADER */}
                 <View style={styles.header}>
+                    <TouchableOpacity
+                        onPress={() => navigation.goBack()}
+                        style={styles.backBtn}
+                        accessibilityRole="button"
+                        accessibilityLabel="뒤로가기"
+                    >
+                        <Text style={styles.backIcon}>←</Text>
+                    </TouchableOpacity>
 
+                    <View style={styles.headerTextWrap}>
                     <Text style={styles.headerTitle}>
                         💳 결제 수단 선택
                     </Text>
@@ -149,7 +162,7 @@ export default function Payment({ navigation, route }: Props) {
                     <Text style={styles.headerSub}>
                         { request.isPayment ? '사용할 결제 수단을 선택하세요' : '내 결제 수단을 확인하세요' }
                     </Text>
-
+                    </View>
                 </View>
 
                 {/* BANK SECTION */}
@@ -294,7 +307,6 @@ export default function Payment({ navigation, route }: Props) {
                 </TouchableOpacity>
                 )
                 : (<TouchableOpacity
-                    disabled={selectedAccount == null && selectedCard == null}
                     style={styles.button}
                     onPress={() => navigation.goBack()}
                 >
@@ -304,6 +316,7 @@ export default function Payment({ navigation, route }: Props) {
                 </TouchableOpacity>
                 )
                 }
+                </Pressable>
             </ScrollView>
 
         </View>

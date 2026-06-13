@@ -15,6 +15,7 @@ import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../../../navigation/StackNavigator';
 import { styles } from './NewProductStyle';
 import { postProduct } from '../../../api/Product/postProduct';
+import { filterDigitsOnly, parsePositiveInt } from '../../../utils/numericInput';
 
 type Props = {
     navigation: NativeStackNavigationProp<RootStackParamList>;
@@ -47,24 +48,36 @@ export default function NewProduct({ navigation, route }: Props) {
     const [category, setCategory]         = useState('');
 
     useEffect(() => {
+        const priceValue = parsePositiveInt(price);
+        const minPeopleValue = parsePositiveInt(minPeople);
+        const deadlineValue = parsePositiveInt(deadlineDays);
         const isFilled =
             title.trim() !== '' &&
             content.trim() !== '' &&
-            price.trim() !== '' &&
-            minPeople.trim() !== '' &&
-            deadlineDays.trim() !== '' &&
+            priceValue !== null &&
+            minPeopleValue !== null &&
+            deadlineValue !== null &&
             category.trim() !== '';
         setFulfilled(isFilled);
     }, [title, content, price, minPeople, deadlineDays, category]);
 
     const handleSubmit = async () => {
         try {
+            const parsedPrice = parsePositiveInt(price);
+            const parsedMinPeople = parsePositiveInt(minPeople);
+            const parsedDeadlineDays = parsePositiveInt(deadlineDays);
+
+            if (parsedPrice === null || parsedMinPeople === null || parsedDeadlineDays === null) {
+                Alert.alert('입력 오류', '가격, 최소 인원, 마감 기한은 숫자만 입력해 주세요.');
+                return;
+            }
+
             const body = {
                 title,
                 content,
-                price:        Number(price),
-                minPeople:    Number(minPeople),
-                deadlineDays: Number(deadlineDays),
+                price:        parsedPrice,
+                minPeople:    parsedMinPeople,
+                deadlineDays: parsedDeadlineDays,
                 category,
                 ...(aiProductId ? { productId: aiProductId } : {}),
             };
@@ -113,9 +126,9 @@ export default function NewProduct({ navigation, route }: Props) {
 
                     <InputField label="제목"      placeholder="제목 입력"      value={title}        onChangeText={setTitle} />
                     <InputField label="상품 설명" placeholder="상품 설명 입력" value={content}      onChangeText={setContent} multiline />
-                    <InputField label="가격"      placeholder="가격 입력"      value={price}        onChangeText={setPrice} keyboardType="numeric" />
-                    <InputField label="최소 인원" placeholder="최소 인원 입력" value={minPeople}    onChangeText={setMinPeople} keyboardType="numeric" />
-                    <InputField label="마감 기한" placeholder="일 단위 입력"   value={deadlineDays} onChangeText={setDeadlineDays} keyboardType="numeric" />
+                    <InputField label="가격"      placeholder="가격 입력"      value={price}        onChangeText={(text: string) => setPrice(filterDigitsOnly(text))} numeric />
+                    <InputField label="최소 인원" placeholder="최소 인원 입력" value={minPeople}    onChangeText={(text: string) => setMinPeople(filterDigitsOnly(text))} numeric />
+                    <InputField label="마감 기한" placeholder="일 단위 입력"   value={deadlineDays} onChangeText={(text: string) => setDeadlineDays(filterDigitsOnly(text))} numeric />
 
                     <View style={styles.inputGroup}>
                         <Text style={styles.inputLabel}>카테고리</Text>
@@ -148,7 +161,7 @@ export default function NewProduct({ navigation, route }: Props) {
     );
 }
 
-function InputField({ label, placeholder, value, onChangeText, keyboardType, multiline }: any) {
+function InputField({ label, placeholder, value, onChangeText, multiline, numeric }: any) {
     return (
         <View style={styles.inputGroup}>
             <Text style={styles.inputLabel}>{label}</Text>
@@ -158,7 +171,8 @@ function InputField({ label, placeholder, value, onChangeText, keyboardType, mul
                 placeholderTextColor="#aaa"
                 value={value}
                 onChangeText={onChangeText}
-                keyboardType={keyboardType}
+                keyboardType={numeric ? 'number-pad' : 'default'}
+                inputMode={numeric ? 'numeric' : undefined}
                 multiline={multiline}
             />
         </View>

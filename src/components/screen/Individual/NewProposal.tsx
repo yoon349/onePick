@@ -25,6 +25,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../navigation/StackNavigator';
 import { styles } from './NewProposalStyle';
 import { postProposal } from '../../../api/Proposal/postProposal';
+import { filterDigitsOnly, parsePositiveInt } from '../../../utils/numericInput';
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>;
 type Props = { navigation: HomeScreenNavigationProp; };
@@ -55,17 +56,26 @@ export default function NewProposal({ navigation }: Props) {
     const [prompt, setPrompt]             = useState('');
 
     useEffect(() => {
+        const maxPriceValue = parsePositiveInt(maxPrice);
+        const deadlineValue = parsePositiveInt(deadlineDays);
         const isFilled =
             title.trim() !== '' &&
             content.trim() !== '' &&
             category.trim() !== '' &&
-            maxPrice.trim() !== '' &&
-            deadlineDays.trim() !== '';
+            maxPriceValue !== null &&
+            deadlineValue !== null;
         setFulfilled(isFilled);
     }, [title, content, category, maxPrice, deadlineDays]);
 
     const handleSubmit = async () => {
         try {
+            const parsedMaxPrice = parsePositiveInt(maxPrice);
+            const parsedDeadlineDays = parsePositiveInt(deadlineDays);
+
+            if (parsedMaxPrice === null || parsedDeadlineDays === null) {
+                Alert.alert('입력 오류', '가격과 마감 기한은 숫자만 입력해 주세요.');
+                return;
+            }
             // ✅ 탭에 따라 다른 imageMetas 구성
             let finalImageMetas = imageMetas;
 
@@ -87,8 +97,8 @@ export default function NewProposal({ navigation }: Props) {
                 title,
                 content,
                 category,
-                maxPrice:     Number(maxPrice),
-                deadlineDays: Number(deadlineDays),
+                maxPrice:     parsedMaxPrice,
+                deadlineDays: parsedDeadlineDays,
                 imageMetas:   finalImageMetas,
             };
 
@@ -185,8 +195,8 @@ export default function NewProposal({ navigation }: Props) {
 
                     <InputField label="제목"      placeholder="제목 입력"      value={title}        onChangeText={setTitle} />
                     <InputField label="상품 설명" placeholder="상품 설명 입력" value={content}      onChangeText={setContent} multiline />
-                    <InputField label="가격"      placeholder="최대 가격 입력" value={maxPrice}     onChangeText={setMaxPrice} keyboardType="numeric" />
-                    <InputField label="마감 기한" placeholder="일 단위 입력"   value={deadlineDays} onChangeText={setDeadlineDays} keyboardType="numeric" />
+                    <InputField label="가격"      placeholder="최대 가격 입력" value={maxPrice}     onChangeText={(text: string) => setMaxPrice(filterDigitsOnly(text))} numeric />
+                    <InputField label="마감 기한" placeholder="일 단위 입력"   value={deadlineDays} onChangeText={(text: string) => setDeadlineDays(filterDigitsOnly(text))} numeric />
 
                     {/* 카테고리 */}
                     <View style={styles.inputGroup}>
@@ -303,7 +313,7 @@ export default function NewProposal({ navigation }: Props) {
     );
 }
 
-function InputField({ label, placeholder, value, onChangeText, keyboardType, multiline }: any) {
+function InputField({ label, placeholder, value, onChangeText, multiline, numeric }: any) {
     return (
         <View style={styles.inputGroup}>
             <Text style={styles.inputLabel}>{label}</Text>
@@ -313,7 +323,8 @@ function InputField({ label, placeholder, value, onChangeText, keyboardType, mul
                 placeholderTextColor="#aaa"
                 value={value}
                 onChangeText={onChangeText}
-                keyboardType={keyboardType}
+                keyboardType={numeric ? 'number-pad' : 'default'}
+                inputMode={numeric ? 'numeric' : undefined}
                 multiline={multiline}
             />
         </View>
