@@ -85,7 +85,7 @@ export const styles = StyleSheet.create({
 
     paymentItemSelected: {
         borderWidth: 2,
-        borderColor: '#4f46e5',
+        borderColor: '#0076F0',
 
         backgroundColor: '#eef2ff',
     },
@@ -108,13 +108,13 @@ export const styles = StyleSheet.create({
         fontSize: 22,
         fontWeight: 'bold',
 
-        color: '#4f46e5',
+        color: '#0076F0',
     },
 
     button: {
         height: 60,
 
-        backgroundColor: '#4f46e5',
+        backgroundColor: '#0076F0',
 
         borderRadius: 18,
 

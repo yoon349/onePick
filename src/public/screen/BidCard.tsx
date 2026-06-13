@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     },
 
 
-  bidAmount:    { fontSize: 18, fontWeight: 'bold', color: '#4f46e5' },
+  bidAmount:    { fontSize: 18, fontWeight: 'bold', color: '#0076F0' },
     cardBottomRow:{
         height: 25,
         flexDirection: 'row',

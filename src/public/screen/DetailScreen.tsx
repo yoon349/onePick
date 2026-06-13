@@ -275,7 +275,7 @@ const styles = StyleSheet.create({
   timeBannerText: {
     fontSize: 14,
     fontWeight: '700',
-    color: '#4f46e5',
+    color: '#0076F0',
   },
 
   // 섹션
@@ -306,7 +306,7 @@ const styles = StyleSheet.create({
   price: {
     fontSize: 26,
     fontWeight: 'bold',
-    color: '#4f46e5',
+    color: '#0076F0',
   },
 
   // 펀딩
@@ -330,7 +330,7 @@ const styles = StyleSheet.create({
   },
   progressFill: {
     height: '100%',
-    backgroundColor: '#4f46e5',
+    backgroundColor: '#0076F0',
     borderRadius: 5,
   },
   fundingInfo: {
@@ -370,7 +370,7 @@ const styles = StyleSheet.create({
   sellerAvatarText: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#4f46e5',
+    color: '#0076F0',
   },
   sellerName: {
     fontSize: 15,
@@ -410,7 +410,7 @@ const styles = StyleSheet.create({
     color: '#1a1a2e',
   },
   bidButton: {
-    backgroundColor: '#4f46e5',
+    backgroundColor: '#0076F0',
     borderRadius: 14,
     paddingVertical: 14,
     paddingHorizontal: 32,
@@ -448,7 +448,7 @@ const styles = StyleSheet.create({
   },
   modalInput: {
     borderWidth: 1.5,
-    borderColor: '#4f46e5',
+    borderColor: '#0076F0',
     borderRadius: 12,
     paddingHorizontal: 16,
     paddingVertical: 14,
@@ -475,7 +475,7 @@ const styles = StyleSheet.create({
   },
   modalBidBtn: {
     flex: 2,
-    backgroundColor: '#4f46e5',
+    backgroundColor: '#0076F0',
     borderRadius: 12,
     paddingVertical: 14,
     alignItems: 'center',

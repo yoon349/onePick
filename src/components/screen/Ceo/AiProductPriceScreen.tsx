@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     headerTitle: { fontSize: 18, fontWeight: '700', color: '#1a1a2e' },
 
     descBox: {
-        backgroundColor: '#4f46e5', borderRadius: 16,
+        backgroundColor: '#0076F0', borderRadius: 16,
         padding: 20, alignItems: 'center', marginBottom: 20, gap: 8,
     },
     descIcon:  { fontSize: 36 },
@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
         fontSize: 14, color: '#222',
     },
 
-    button:         { backgroundColor: '#4f46e5', borderRadius: 14, paddingVertical: 16, alignItems: 'center' },
+    button:         { backgroundColor: '#0076F0', borderRadius: 14, paddingVertical: 16, alignItems: 'center' },
     buttonDisabled: { backgroundColor: '#a5b4fc' },
     buttonText:     { color: '#fff', fontSize: 16, fontWeight: '700' },
 });

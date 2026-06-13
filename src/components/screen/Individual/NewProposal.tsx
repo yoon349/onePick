@@ -335,7 +335,7 @@ const tabStyles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 10,
     },
-    tabActive:     { backgroundColor: '#4f46e5' },
+    tabActive:     { backgroundColor: '#0076F0' },
     tabText:       { fontSize: 14, color: '#888', fontWeight: '500' },
     tabTextActive: { color: '#fff', fontWeight: '700' },
     sketchHeader: {
@@ -355,6 +355,6 @@ const tabStyles = StyleSheet.create({
     clearBtn:     { backgroundColor: '#fee2e2', paddingHorizontal: 14, paddingVertical: 6, borderRadius: 8 },
     clearBtnText: { color: '#ef4444', fontSize: 13, fontWeight: '600' },
     saveBtn:      { marginTop: 10, backgroundColor: '#eef2ff', borderRadius: 10, paddingVertical: 10, alignItems: 'center' },
-    saveBtnText:  { color: '#4f46e5', fontSize: 14, fontWeight: '600' },
+    saveBtnText:  { color: '#0076F0', fontSize: 14, fontWeight: '600' },
     promptGroup:  { marginTop: 14 },
 });

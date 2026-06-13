@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
   detailBtnText: {
     fontSize: 14,
     fontWeight: '700',
-    color: '#4f46e5',
+    color: '#0076F0',
   },
   emptyBox: { alignItems: 'center', paddingVertical: 60, gap: 12 },
   emptyEmoji: { fontSize: 40 },

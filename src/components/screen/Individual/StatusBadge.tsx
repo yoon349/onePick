@@ -12,7 +12,7 @@ const BADGES: {
     {
         key: 'PENDING',
         label: '진행중',
-        color: '#4f46e5',
+        color: '#0076F0',
     },
     {
         key: 'FINISHED',

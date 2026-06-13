@@ -15,7 +15,7 @@ export const ORDER_STATUS_LABEL: Record<OrderStatus, string> = {
 };
 
 export const ORDER_STATUS_STYLE: Record<OrderStatus, { bg: string; color: string }> = {
-  PRODUCTION: { bg: '#eef2ff', color: '#4f46e5' },
+  PRODUCTION: { bg: '#eef2ff', color: '#0076F0' },
   PRODUCTION_DONE: { bg: '#e0f2fe', color: '#0369a1' },
   SHIPPING: { bg: '#fef3c7', color: '#b45309' },
   DELIVERED: { bg: '#d1fae5', color: '#065f46' },

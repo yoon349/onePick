@@ -150,7 +150,7 @@ export default function ProposalDetail({ navigation, route }: Props) {
   if (loading) {
     return (
       <View style={styles.loadingBox}>
-        <ActivityIndicator size="large" color="#4f46e5" />
+        <ActivityIndicator size="large" color="#0076F0" />
       </View>
     );
   }
@@ -189,7 +189,7 @@ export default function ProposalDetail({ navigation, route }: Props) {
             <View style={styles.imagePlaceholder}>
               {aiRunning ? (
                 <>
-                  <ActivityIndicator color="#4f46e5" />
+                  <ActivityIndicator color="#0076F0" />
                   <Text style={styles.imagePlaceholderText}>AI 이미지 생성 중...</Text>
                 </>
               ) : (
@@ -407,7 +407,7 @@ const styles = StyleSheet.create({
   imagePlaceholder:     { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 8 },
   imagePlaceholderEmoji:{ fontSize: 60 },
   imagePlaceholderText: { fontSize: 14, color: '#888' },
-  aiBadge:     { position: 'absolute', top: 12, right: 12, backgroundColor: '#4f46e5', borderRadius: 8, paddingHorizontal: 10, paddingVertical: 5 },
+  aiBadge:     { position: 'absolute', top: 12, right: 12, backgroundColor: '#0076F0', borderRadius: 8, paddingHorizontal: 10, paddingVertical: 5 },
   aiBadgeText: { fontSize: 12, color: '#fff', fontWeight: '700' },
 
   section:      { backgroundColor: '#fff', padding: 20, marginTop: 8 },
@@ -434,7 +434,7 @@ const styles = StyleSheet.create({
   infoValue:{ fontSize: 16, fontWeight: '700', color: '#1a1a2e' },
 
   productName: { fontSize: 22, fontWeight: 'bold', color: '#1a1a2e', marginBottom: 8 },
-  price:       { fontSize: 26, fontWeight: 'bold', color: '#4f46e5', marginBottom: 4 },
+  price:       { fontSize: 26, fontWeight: 'bold', color: '#0076F0', marginBottom: 4 },
   seller:      { marginTop: 3, fontSize: 13, color: '#888' },
   description: { fontSize: 14, color: '#555', lineHeight: 22 },
   emptyText:   { fontSize: 14, color: '#aaa', textAlign: 'center', paddingVertical: 20 },
@@ -461,7 +461,7 @@ const styles = StyleSheet.create({
   },
 
   fundingNickname: { fontSize: 14, fontWeight: '600', color: '#1a1a2e', marginBottom: 4 },
-  fundingPrice:    { fontSize: 16, fontWeight: 'bold', color: '#4f46e5' },
+  fundingPrice:    { fontSize: 16, fontWeight: 'bold', color: '#0076F0' },
   fundingBtns:     { flexDirection: 'row', gap: 8 },
   rejectBtn:       { borderWidth: 1, borderColor: '#ef4444', borderRadius: 8, paddingHorizontal: 12, paddingVertical: 6 },
   rejectBtnText:   { color: '#ef4444', fontSize: 13, fontWeight: '600' },
@@ -494,7 +494,7 @@ const styles = StyleSheet.create({
   },
   modalInput: {
     borderWidth: 1.5,
-    borderColor: '#4f46e5',
+    borderColor: '#0076F0',
     borderRadius: 12,
     paddingHorizontal: 16,
     paddingVertical: 14,
@@ -521,7 +521,7 @@ const styles = StyleSheet.create({
   },
   modalBidBtn: {
     flex: 2,
-    backgroundColor: '#4f46e5',
+    backgroundColor: '#0076F0',
     borderRadius: 12,
     paddingVertical: 14,
     alignItems: 'center',
@@ -535,7 +535,7 @@ const styles = StyleSheet.create({
   // 버튼
   button: {
     width: '92%',
-    backgroundColor: '#4f46e5',
+    backgroundColor: '#0076F0',
     borderRadius: 16,
     paddingVertical: 18,
     alignSelf: 'center',

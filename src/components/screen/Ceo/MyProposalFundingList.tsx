@@ -48,7 +48,7 @@ interface Bid {
 
 // ── 탭 설정 ────────────────────────────────────────────────
 const TABS: { key: BidStatus; label: string; color: string }[] = [
-  { key: 'PENDING',    label: '대기중', color: '#4f46e5' },
+  { key: 'PENDING',    label: '대기중', color: '#0076F0' },
   { key: 'CHOSEN', label: '낙찰',   color: '#10b981' },
   { key: 'REJECTED', label: '거절',   color: '#ef4444' },
 ];
@@ -321,7 +321,7 @@ const styles = StyleSheet.create({
   cardContent:  { flex: 1, gap: 4 },
   cardTopRow:   { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   productName:  { fontSize: 14, fontWeight: '700', color: '#1a1a2e', flex: 1, marginRight: 8 },
-  bidAmount:    { fontSize: 18, fontWeight: 'bold', color: '#4f46e5' },
+  bidAmount:    { fontSize: 18, fontWeight: 'bold', color: '#0076F0' },
   cardBottomRow:{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', marginTop: 2, },
   dateText:     { marginRight: 10, fontSize: 12, color: '#737684' },
   categoryText: { fontWeight: '600', fontSize: 13, },

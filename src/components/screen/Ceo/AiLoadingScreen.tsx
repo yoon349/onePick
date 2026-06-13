@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
     sub:   { fontSize: 14, color: 'rgba(255,255,255,0.6)', marginBottom: 32 },
 
     progressBg:   { width: '100%', height: 10, backgroundColor: 'rgba(255,255,255,0.15)', borderRadius: 5, overflow: 'hidden', marginBottom: 32 },
-    progressFill: { height: '100%', backgroundColor: '#4f46e5', borderRadius: 5 },
+    progressFill: { height: '100%', backgroundColor: '#0076F0', borderRadius: 5 },
 
     stepList: { width: '100%', gap: 14, marginBottom: 32 },
     stepRow:  { flexDirection: 'row', alignItems: 'center', gap: 12 },

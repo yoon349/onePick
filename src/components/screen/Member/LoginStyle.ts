@@ -80,7 +80,7 @@ export const styles = StyleSheet.create({
     },
 
     button: {
-        backgroundColor: '#4f46e5',
+        backgroundColor: '#0076F0',
 
         marginHorizontal: 24,
         marginBottom: 36,

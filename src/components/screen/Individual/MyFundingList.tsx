@@ -45,7 +45,7 @@ interface Bid {
 
 // ── 탭 설정 ────────────────────────────────────────────────
 const TABS: { key: BidStatus; label: string; color: string }[] = [
-  { key: 'PENDING',    label: '진행중', color: '#4f46e5' },
+  { key: 'PENDING',    label: '진행중', color: '#0076F0' },
   { key: 'FINISHED', label: '종료',   color: '#10b981' },
   { key: 'CANCELED', label: '취소',   color: '#ef4444' },
 ];
@@ -54,7 +54,7 @@ const TABS: { key: BidStatus; label: string; color: string }[] = [
 // ── 상태 뱃지 ──────────────────────────────────────────────
 function StatusBadge({ status }: { status: BidStatus }) {
   const config = {
-    PENDING:    { label: '진행중', bg: '#eef2ff', color: '#4f46e5' },
+    PENDING:    { label: '진행중', bg: '#eef2ff', color: '#0076F0' },
     FINISHED: { label: '종료',   bg: '#d1fae5', color: '#065f46' },
     CANCELED: { label: '취소',   bg: '#fee2e2', color: '#991b1b' },
   }[status];
@@ -323,10 +323,10 @@ const styles = StyleSheet.create({
   cardContent:  { flex: 1, gap: 4 },
   cardTopRow:   { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   productName:  { fontSize: 14, fontWeight: '700', color: '#1a1a2e', flex: 1, marginRight: 8 },
-  bidAmount:    { fontSize: 18, fontWeight: 'bold', color: '#4f46e5' },
+  bidAmount:    { fontSize: 18, fontWeight: 'bold', color: '#0076F0' },
   cardBottomRow:{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 2 },
   dateText:     { fontSize: 12, color: '#aaa' },
-  remainText:   { fontSize: 12, color: '#4f46e5', fontWeight: '600' },
+  remainText:   { fontSize: 12, color: '#0076F0', fontWeight: '600' },
   remainUrgent: { color: '#ef4444' },
   endDateText:  { fontSize: 12, color: '#aaa' },
   badge:        { paddingHorizontal: 8, paddingVertical: 3, borderRadius: 8 },

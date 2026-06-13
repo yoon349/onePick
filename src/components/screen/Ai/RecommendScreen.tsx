@@ -300,7 +300,7 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   categoryChipSelected: {
-    borderColor: '#4f46e5',
+    borderColor: '#0076F0',
     backgroundColor: '#eef2ff',
   },
   categoryEmoji: {
@@ -312,7 +312,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   categoryTextSelected: {
-    color: '#4f46e5',
+    color: '#0076F0',
     fontWeight: '700',
   },
 
@@ -332,7 +332,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fafafa',
   },
   priceChipSelected: {
-    borderColor: '#4f46e5',
+    borderColor: '#0076F0',
     backgroundColor: '#eef2ff',
   },
   priceText: {
@@ -341,13 +341,13 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   priceTextSelected: {
-    color: '#4f46e5',
+    color: '#0076F0',
     fontWeight: '700',
   },
 
   // 버튼
   button: {
-    backgroundColor: '#4f46e5',
+    backgroundColor: '#0076F0',
     borderRadius: 14,
     paddingVertical: 16,
     alignItems: 'center',
@@ -382,7 +382,7 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     borderRadius: 16,
-    backgroundColor: '#4f46e5',
+    backgroundColor: '#0076F0',
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 12,
@@ -410,7 +410,7 @@ const styles = StyleSheet.create({
   },
   matchBadge: {
     fontSize: 11,
-    color: '#4f46e5',
+    color: '#0076F0',
     fontWeight: '600',
   },
   productCategory: {
@@ -432,7 +432,7 @@ const styles = StyleSheet.create({
   },
   tagText: {
     fontSize: 11,
-    color: '#4f46e5',
+    color: '#0076F0',
   },
   scoreRow: {
     flexDirection: 'row',
@@ -463,14 +463,14 @@ const styles = StyleSheet.create({
   // 다시 선택 버튼
   resetButton: {
     borderWidth: 1,
-    borderColor: '#4f46e5',
+    borderColor: '#0076F0',
     borderRadius: 10,
     paddingVertical: 12,
     alignItems: 'center',
     marginTop: 8,
   },
   resetButtonText: {
-    color: '#4f46e5',
+    color: '#0076F0',
     fontSize: 14,
     fontWeight: '600',
   },

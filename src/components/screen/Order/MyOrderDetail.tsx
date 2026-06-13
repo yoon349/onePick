@@ -267,8 +267,8 @@ const styles = StyleSheet.create({
     borderColor: '#e5e7eb',
   },
   stepDotDone: {
-    backgroundColor: '#4f46e5',
-    borderColor: '#4f46e5',
+    backgroundColor: '#0076F0',
+    borderColor: '#0076F0',
   },
   stepDotCurrent: {
     width: 18,
@@ -283,11 +283,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#e5e7eb',
     marginVertical: 2,
   },
-  stepLineDone: { backgroundColor: '#4f46e5' },
+  stepLineDone: { backgroundColor: '#0076F0' },
   stepContent: { flex: 1, paddingLeft: 12, paddingBottom: 16 },
   stepLabel: { fontSize: 15, fontWeight: '600', color: '#aaa' },
   stepLabelCurrent: { color: '#1a1a2e', fontWeight: '700' },
-  stepHint: { fontSize: 12, color: '#4f46e5', marginTop: 2, fontWeight: '600' },
+  stepHint: { fontSize: 12, color: '#0076F0', marginTop: 2, fontWeight: '600' },
   stepHintDone: { fontSize: 12, color: '#10b981', marginTop: 2 },
   stepHintPending: { fontSize: 12, color: '#ccc', marginTop: 2 },
   completeBtn: {

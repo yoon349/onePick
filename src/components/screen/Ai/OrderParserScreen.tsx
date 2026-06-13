@@ -272,7 +272,7 @@ const styles = StyleSheet.create({
 
   // 버튼
   button: {
-    backgroundColor: '#4f46e5',
+    backgroundColor: '#0076F0',
     borderRadius: 14,
     paddingVertical: 16,
     alignItems: 'center',
@@ -317,7 +317,7 @@ const styles = StyleSheet.create({
   sectionBoxTitle: {
     fontSize: 13,
     fontWeight: '700',
-    color: '#4f46e5',
+    color: '#0076F0',
     marginBottom: 10,
   },
 
@@ -365,13 +365,13 @@ const styles = StyleSheet.create({
   // 다시 파싱 버튼
   resetButton: {
     borderWidth: 1,
-    borderColor: '#4f46e5',
+    borderColor: '#0076F0',
     borderRadius: 10,
     paddingVertical: 12,
     alignItems: 'center',
   },
   resetButtonText: {
-    color: '#4f46e5',
+    color: '#0076F0',
     fontSize: 14,
     fontWeight: '600',
   },

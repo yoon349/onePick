@@ -68,7 +68,7 @@ export const styles = StyleSheet.create({
     infoValue: {
         fontSize: 16,
         fontWeight: '700',
-        color: '#4f46e5',
+        color: '#0076F0',
     },
 
     divider: {
@@ -107,7 +107,7 @@ export const styles = StyleSheet.create({
     
 
     profileCard: {
-    backgroundColor: '#4f46e5',
+    backgroundColor: '#0076F0',
 
     borderRadius: 28,
 
@@ -115,7 +115,7 @@ export const styles = StyleSheet.create({
 
     marginBottom: 20,
 
-    shadowColor: '#4f46e5',
+    shadowColor: '#0076F0',
     shadowOpacity: 0.25,
     shadowRadius: 12,
 
@@ -253,7 +253,7 @@ dashboardValue: {
     fontSize: 24,
     fontWeight: 'bold',
 
-    color: '#4f46e5',
+    color: '#0076F0',
 },
 
 profilePaymentBox: {

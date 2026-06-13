@@ -298,7 +298,7 @@ const styles = StyleSheet.create({
 
   // 버튼
   button: {
-    backgroundColor: '#4f46e5',
+    backgroundColor: '#0076F0',
     borderRadius: 14,
     paddingVertical: 16,
     alignItems: 'center',
@@ -337,7 +337,7 @@ const styles = StyleSheet.create({
   priceValue: {
     fontSize: 32,
     fontWeight: 'bold',
-    color: '#4f46e5',
+    color: '#0076F0',
     marginBottom: 4,
   },
   priceMargin: {
@@ -365,13 +365,13 @@ const styles = StyleSheet.create({
   // 다시 분석 버튼
   resetButton: {
     borderWidth: 1,
-    borderColor: '#4f46e5',
+    borderColor: '#0076F0',
     borderRadius: 10,
     paddingVertical: 12,
     alignItems: 'center',
   },
   resetButtonText: {
-    color: '#4f46e5',
+    color: '#0076F0',
     fontSize: 14,
     fontWeight: '600',
   },
