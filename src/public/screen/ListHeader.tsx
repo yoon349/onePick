@@ -7,6 +7,10 @@ import {
     TouchableOpacity,
     StyleSheet,
 } from 'react-native';
+import {
+    LIST_HEADER_HEIGHT,
+    LIST_HEADER_PADDING_TOP,
+} from '../../utils/screenLayout';
 
 
 
@@ -54,10 +58,10 @@ export default function ListHeader({
 // ── 스타일 ─────────────────────────────────────────────────
 const styles = StyleSheet.create({
   header: {
-    height: 140,
+    height: LIST_HEADER_HEIGHT,
     flexDirection: 'row',
     paddingHorizontal: 20,
-    paddingTop: 50,
+    paddingTop: LIST_HEADER_PADDING_TOP,
     paddingBottom: 12,
     backgroundColor: '#fff',
   },

@@ -1,4 +1,5 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
+import { SCREEN_HEADER_TOP_COMPACT } from '../../../utils/screenLayout';
 
 export const styles = StyleSheet.create({
 
@@ -14,10 +15,9 @@ export const styles = StyleSheet.create({
 
     header: {
         left: 15,
-        marginTop: 50,
-        //marginBottom: 24,
+        marginTop: SCREEN_HEADER_TOP_COMPACT,
         marginBottom: 20,
-        paddingTop: 10,
+        paddingTop: Platform.OS === 'ios' ? 10 : 0,
     },
 
     headerTitle: {

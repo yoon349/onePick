@@ -7,7 +7,6 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  ScrollView,
   StyleSheet,
   ActivityIndicator,
   KeyboardAvoidingView,
@@ -16,6 +15,7 @@ import {
   Image,
   Dimensions,
 } from 'react-native';
+import FormScrollView from '../../common/FormScrollView';
 import SignatureCanvas from 'react-native-signature-canvas';
 
 
@@ -134,10 +134,9 @@ export default function Sketch2ProductScreen({ navigation }: Props) {
       style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
-      <ScrollView
+      <FormScrollView
         style={{ flex: 1 }}
         contentContainerStyle={styles.scroll}
-        keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
         bounces={true}
       >
@@ -247,7 +246,7 @@ export default function Sketch2ProductScreen({ navigation }: Props) {
           </View>
         )}
 
-      </ScrollView>
+      </FormScrollView>
     </KeyboardAvoidingView>
   );
 }

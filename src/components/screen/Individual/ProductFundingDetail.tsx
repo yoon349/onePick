@@ -10,9 +10,9 @@ import {
   Modal,
   TextInput,
   TouchableOpacity,
-  ScrollView,
   StyleSheet,
 } from 'react-native';
+import FormScrollView from '../../common/FormScrollView';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../navigation/StackNavigator';
 import { RouteProp } from '@react-navigation/native';
@@ -141,7 +141,7 @@ if (!product) {
 
   return (
     <View style={styles.container}>
-      <ScrollView
+      <FormScrollView
         style={{ flex: 1 }}
         contentContainerStyle={styles.scroll}
         showsVerticalScrollIndicator={false}
@@ -296,7 +296,7 @@ if (!product) {
       </View>
     </Modal>
     
-      </ScrollView>
+      </FormScrollView>
     </View>
   );
 }

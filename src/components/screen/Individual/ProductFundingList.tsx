@@ -153,7 +153,7 @@ export default function ProductFundingList({ navigation }: Props) {
               id={product.productId}
               title={product.title}
               category={product.category}
-              valueString={`${product.minQuantity}개`}
+              valueString={`${product.fundedQuantity ?? 0} / ${product.minQuantity}개`}
               thumbnail={product.thumbnail !== null ? product.thumbnail.imageUrl : null}
               remainingDeadlineDays={product.remainingDeadlineDays}
               buttonView={null}

@@ -5,9 +5,10 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import {
-    Alert, Text, TouchableOpacity, View, ScrollView,
+    Alert, Text, TouchableOpacity, View,
     TextInput, KeyboardAvoidingView, Platform,
 } from 'react-native';
+import FormScrollView from '../../common/FormScrollView';
 import { Dropdown } from 'react-native-element-dropdown';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RouteProp } from '@react-navigation/native';
@@ -89,7 +90,7 @@ export default function NewProduct({ navigation, route }: Props) {
             style={styles.container}
             behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         >
-            <ScrollView contentContainerStyle={styles.scroll}>
+            <FormScrollView contentContainerStyle={styles.scroll}>
 
                 {/* 헤더 */}
                 <View style={styles.header}>
@@ -142,7 +143,7 @@ export default function NewProduct({ navigation, route }: Props) {
                     <Text style={styles.buttonText}>완료</Text>
                 </TouchableOpacity>
 
-            </ScrollView>
+            </FormScrollView>
         </KeyboardAvoidingView>
     );
 }

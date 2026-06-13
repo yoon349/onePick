@@ -1,6 +1,7 @@
 // PaymentStyle.ts
 
 import { StyleSheet } from 'react-native';
+import { SCREEN_HEADER_TOP } from '../../utils/screenLayout';
 
 export const styles = StyleSheet.create({
 
@@ -16,8 +17,7 @@ export const styles = StyleSheet.create({
 
     header: {
         left: 15,
-        marginTop: 65,
-        //marginTop: 20,
+        marginTop: SCREEN_HEADER_TOP,
         marginBottom: 24,
     },
 

@@ -8,13 +8,14 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  ScrollView,
   StyleSheet,
   ActivityIndicator,
   KeyboardAvoidingView,
   Platform,
   Alert,
 } from 'react-native';
+
+import FormScrollView from '../../common/FormScrollView';
 
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { RootStackParamList } from '../../../navigation/StackNavigator'
@@ -113,10 +114,9 @@ export default function GongguAIScreen({ navigation }: Props) {
       style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
-      <ScrollView
+      <FormScrollView
         style={{ flex: 1 }}
         contentContainerStyle={styles.scroll}
-        keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
         bounces={true}
       >
@@ -202,7 +202,7 @@ export default function GongguAIScreen({ navigation }: Props) {
           </View>
         )}
 
-      </ScrollView>
+      </FormScrollView>
     </KeyboardAvoidingView>
   );
 }

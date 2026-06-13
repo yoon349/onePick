@@ -1,106 +1,90 @@
-// LoginStyle.ts
-
-
 import { StyleSheet } from 'react-native';
+import { brand } from '../../../public/style/colors';
 
 export const styles = StyleSheet.create({
-
-    container: {
-        flex: 1,
-        backgroundColor: '#f5f6fa',
-        justifyContent: 'space-between',
-    },
-
-    content: {
-        flex: 1,
-
-        justifyContent: 'center',
-
-        paddingHorizontal: 24,
-    },
-
-    titleBox: {
-        marginBottom: 40,
-    },
-
-    title: {
-        fontSize: 36,
-        fontWeight: 'bold',
-
-        lineHeight: 48,
-
-        color: '#1a1a2e',
-    },
-
-    subTitle: {
-        marginTop: 12,
-
-        fontSize: 16,
-        color: '#888',
-    },
-
-    card: {
-        backgroundColor: '#fff',
-
-        borderRadius: 24,
-
-        padding: 24,
-
-        shadowColor: '#000',
-        shadowOpacity: 0.05,
-        shadowRadius: 8,
-
-        elevation: 2,
-    },
-
-    inputLabel: {
-        fontSize: 15,
-        fontWeight: '600',
-
-        color: '#1a1a2e',
-
-        marginBottom: 10,
-    },
-
-    input: {
-        height: 56,
-
-        borderWidth: 1,
-        borderColor: '#e5e7eb',
-
-        borderRadius: 14,
-
-        paddingHorizontal: 16,
-
-        fontSize: 16,
-
-        color: '#1a1a2e',
-
-        backgroundColor: '#fafafa',
-    },
-
-    button: {
-        backgroundColor: '#0076F0',
-
-        marginHorizontal: 24,
-        marginBottom: 36,
-
-        height: 58,
-
-        borderRadius: 16,
-
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-
-    buttonDisabled: {
-        backgroundColor: '#c7c9d9',
-    },
-
-    buttonText: {
-        color: '#fff',
-
-        fontSize: 17,
-        fontWeight: '700',
-    },
+  container: {
+    flex: 1,
+    backgroundColor: brand.white,
+  },
+  flex: {
+    flex: 1,
+  },
+  topAccent: {
+    height: 6,
+    backgroundColor: brand.primary,
+  },
+  scrollContent: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 28,
+    paddingTop: 24,
+    paddingBottom: 32,
+  },
+  logoWrap: {
+    alignItems: 'center',
+    marginBottom: 28,
+  },
+  slogan: {
+    fontSize: 24,
+    fontWeight: '700',
+    color: brand.ibkDeepBlue,
+    textAlign: 'center',
+    lineHeight: 34,
+    marginBottom: 8,
+  },
+  subSlogan: {
+    fontSize: 14,
+    color: '#5A6478',
+    textAlign: 'center',
+    lineHeight: 22,
+    marginBottom: 40,
+  },
+  card: {
+    backgroundColor: '#F8FAFC',
+    borderRadius: 20,
+    padding: 24,
+    borderWidth: 1,
+    borderColor: '#E8EEF5',
+  },
+  inputLabel: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: brand.ibkDeepBlue,
+    marginBottom: 10,
+  },
+  input: {
+    height: 54,
+    borderWidth: 1,
+    borderColor: '#D6E4F0',
+    borderRadius: 12,
+    paddingHorizontal: 16,
+    fontSize: 16,
+    color: brand.ibkDeepBlue,
+    backgroundColor: brand.white,
+  },
+  button: {
+    backgroundColor: brand.primary,
+    marginTop: 24,
+    height: 56,
+    borderRadius: 14,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonDisabled: {
+    backgroundColor: '#B8C9DC',
+  },
+  buttonText: {
+    color: brand.white,
+    fontSize: 17,
+    fontWeight: '700',
+  },
+  inputAccessory: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    backgroundColor: '#f0f0f0',
+    borderTopWidth: 1,
+    borderTopColor: '#ddd',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+  },
 });

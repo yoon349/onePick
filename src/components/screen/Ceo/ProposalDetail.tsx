@@ -5,8 +5,9 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import {
   Alert, View, Text, Image, TouchableOpacity, Modal,
-  TextInput, ScrollView, StyleSheet, ActivityIndicator,
+  TextInput, StyleSheet, ActivityIndicator,
 } from 'react-native';
+import FormScrollView from '../../common/FormScrollView';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../navigation/StackNavigator';
 import { RouteProp } from '@react-navigation/native';
@@ -166,7 +167,7 @@ export default function ProposalDetail({ navigation, route }: Props) {
 
   return (
     <View style={styles.container}>
-      <ScrollView
+      <FormScrollView
         style={{ flex: 1 }}
         contentContainerStyle={styles.scroll}
         showsVerticalScrollIndicator={false}
@@ -358,7 +359,7 @@ export default function ProposalDetail({ navigation, route }: Props) {
 
 
         <View style={{ height: 40 }} />
-      </ScrollView>
+      </FormScrollView>
     </View>
   );
 }

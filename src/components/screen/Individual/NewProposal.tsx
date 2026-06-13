@@ -10,14 +10,14 @@ import {
     Image,
     TouchableOpacity,
     View,
-    ScrollView,
     TextInput,
     KeyboardAvoidingView,
     Platform,
     StyleSheet,
+    ScrollView,
 } from 'react-native';
 
-import * as ImagePicker from 'react-native-image-picker';
+import FormScrollView from '../../common/FormScrollView';
 import { Dropdown } from 'react-native-element-dropdown';
 import SignatureCanvas from 'react-native-signature-canvas';
 
@@ -151,7 +151,7 @@ export default function NewProposal({ navigation }: Props) {
             style={styles.container}
             behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         >
-            <ScrollView contentContainerStyle={styles.scroll}>
+            <FormScrollView contentContainerStyle={styles.scroll}>
 
                 {/* HEADER */}
                 <View style={styles.header}>
@@ -298,7 +298,7 @@ export default function NewProposal({ navigation }: Props) {
                     <Text style={styles.buttonText}>완료</Text>
                 </TouchableOpacity>
 
-            </ScrollView>
+            </FormScrollView>
         </KeyboardAvoidingView>
     );
 }

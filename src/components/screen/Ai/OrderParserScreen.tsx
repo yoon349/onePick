@@ -8,13 +8,14 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  ScrollView,
   StyleSheet,
   ActivityIndicator,
   KeyboardAvoidingView,
   Platform,
   Alert,
 } from 'react-native';
+
+import FormScrollView from '../../common/FormScrollView';
 
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { RootStackParamList } from '../../../navigation/StackNavigator'
@@ -104,7 +105,7 @@ export default function OrderParserScreen({ navigation }: Props) {
       style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
-      <ScrollView contentContainerStyle={styles.scroll}>
+      <FormScrollView contentContainerStyle={styles.scroll}>
 
         {/* 헤더 */}
         <View style={styles.header}>
@@ -188,7 +189,7 @@ export default function OrderParserScreen({ navigation }: Props) {
           </View>
         )}
 
-      </ScrollView>
+      </FormScrollView>
     </KeyboardAvoidingView>
   );
 }

@@ -4,9 +4,10 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import {
-    Alert, Text, TouchableOpacity, View, ScrollView,
+    Alert, Text, TouchableOpacity, View,
     TextInput, KeyboardAvoidingView, Platform, ActivityIndicator, StyleSheet,
 } from 'react-native';
+import FormScrollView from '../../common/FormScrollView';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../navigation/StackNavigator';
 import { postProductPriceJob } from '../../../api/ProductPrice/productPriceApi';
@@ -63,7 +64,7 @@ export default function AiProductPriceScreen({ navigation }: Props) {
             style={styles.container}
             behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         >
-            <ScrollView contentContainerStyle={styles.scroll}>
+            <FormScrollView contentContainerStyle={styles.scroll}>
 
                 {/* 헤더 */}
                 <View style={styles.header}>
@@ -104,7 +105,7 @@ export default function AiProductPriceScreen({ navigation }: Props) {
                     }
                 </TouchableOpacity>
 
-            </ScrollView>
+            </FormScrollView>
         </KeyboardAvoidingView>
     );
 }

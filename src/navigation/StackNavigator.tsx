@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 import Login from '../components/screen/Member/Login'
 import MyPage from '../components/screen/Member/MyPage'
+import SplashScreen from '../components/screen/SplashScreen'
 
 import NewProposal from '../components/screen/Individual/NewProposal'
 import ProductFundingList from '../components/screen/Individual/ProductFundingList'
@@ -35,6 +36,7 @@ import { ProposalOrder } from '../interface/order'
 
 
 export type RootStackParamList = {
+  Splash: undefined;
   Login: undefined;
   MyPage: {
     member: Member;
@@ -99,10 +101,15 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 export default function StackNavigator() {
   return (
     <Stack.Navigator
+      initialRouteName="Splash"
       screenOptions={{
         headerShown: false,
       }}
     >
+      <Stack.Screen
+        name="Splash"
+        component={SplashScreen}
+      />
       <Stack.Screen
         name="Login"
         component={Login}

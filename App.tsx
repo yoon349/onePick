@@ -5,70 +5,20 @@
  * @format
  */
 
-
-
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native'
-import StackNavigator from './src/navigation/StackNavigator'
+import { NavigationContainer } from '@react-navigation/native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import StackNavigator from './src/navigation/StackNavigator';
+import DismissKeyboardView from './src/components/common/DismissKeyboardView';
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <StackNavigator />
-    </NavigationContainer>
-  );
-}
-
-
-/*
-
-import { NewAppScreen } from '@react-native/new-app-screen';
-import React from 'react';
-import { StatusBar, StyleSheet, Text, useColorScheme, View } from 'react-native';
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
-
-
-function App() {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  return (
     <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <AppContent />
+      <DismissKeyboardView>
+        <NavigationContainer>
+          <StackNavigator />
+        </NavigationContainer>
+      </DismissKeyboardView>
     </SafeAreaProvider>
   );
 }
-
-function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
-
-  return (
-    <View style={styles.container}>
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
-      />
-      <View style={styles.box}>
-        <Text style={styles.text}>HELLO, SORI</Text>
-      </View>
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  box: {
-    alignSelf: 'center',
-  },
-  text: {
-    fontSize: 36,
-  }
-});
-
-export default App;
-*/
