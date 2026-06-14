@@ -193,9 +193,9 @@ export default function ProposalDetail({ navigation, route }: Props) {
 
         {/* 이미지 영역 */}
         <View style={styles.imageBox}>
-          { proposal.images[0] ? (
+          { mainImage ? (
             <Image
-              source={{ uri: encodeURI(proposal.images[0].imageUrl) }}
+              source={{ uri: encodeURI(mainImage.imageUrl) }}
               style={styles.productImage}
               resizeMode="cover"
               onError={(e) => {

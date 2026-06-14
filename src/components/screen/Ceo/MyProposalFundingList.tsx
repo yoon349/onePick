@@ -250,7 +250,7 @@ export default function MyProposalFundingList({ navigation }: Props) {
               title={myProposalFunding.proposalTitle}
               category={myProposalFunding.proposalCategory}
               valueString={`제안 ${myProposalFunding.proposalFundingPrice.toLocaleString()}원`}
-              thumbnail={null}
+              thumbnail={myProposalFunding.thumbnail !== null ? myProposalFunding.thumbnail.imageUrl : null}
               remainingDeadlineDays={0}
               buttonView={
                 myProposalFunding.productStatus === 'PENDING'
