@@ -195,7 +195,7 @@ export default function ProposalDetail({ navigation, route }: Props) {
             <Image
               source={{ uri: encodeURI(mainImage.imageUrl) }}
               style={styles.productImage}
-              resizeMode="cover"
+              resizeMode="contain"
               onError={(e) => {
                 console.log('이미지 로드 실패');
                 console.log(proposal.thumbnail.imageUrl);
@@ -444,7 +444,7 @@ const styles = StyleSheet.create({
 
   imageBox: {
     position: 'relative',
-    height: 240,
+    height: 270,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
@@ -457,10 +457,10 @@ const styles = StyleSheet.create({
   
   badgeWrapper: {
     position: 'absolute',
-    top: 186,
+    bottom: 16,
     right: 24,
     zIndex: 20,
-},
+  },
 
 
 

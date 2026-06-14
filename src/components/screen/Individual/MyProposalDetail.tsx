@@ -5,7 +5,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import {
   Alert, View, Text, Image, TouchableOpacity,
-  StyleSheet, ActivityIndicator,
+  StyleSheet, ActivityIndicator, Dimensions,
 } from 'react-native';
 import FormScrollView from '../../common/FormScrollView';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -15,6 +15,7 @@ import { getFundings } from '../../../api/ProposalFunding/getFundings';
 import { patchAcceptFunding } from '../../../api/ProposalFunding/patchAcceptFunding';
 import { patchRejectFunding } from '../../../api/ProposalFunding/patchRejectFunding';
 import { api } from '../../../api/axios';
+import StatusBadge from './StatusBadge';
 
 type Props = {
   navigation: NativeStackNavigationProp<RootStackParamList>;
@@ -25,6 +26,8 @@ const CATEGORY_LABELS: Record<string, string> = {
   FOOD: '식품', FURNITURE: '가구', DIGITAL: '디지털',
   FASHION: '패션', BEAUTY: '뷰티', ETC: '기타',
 };
+
+const IMAGE_BOX_HEIGHT = Math.round(Dimensions.get('window').height * 0.45);
 
 export default function MyProposalDetail({ navigation, route }: Props) {
   const { proposalId } = route.params;
@@ -120,7 +123,11 @@ export default function MyProposalDetail({ navigation, route }: Props) {
         {/* 이미지 영역 */}
         <View style={styles.imageBox}>
           {mainImage?.imageUrl ? (
-            <Image source={{ uri: mainImage.imageUrl }} style={styles.productImage} resizeMode="cover" />
+            <Image
+              source={{ uri: mainImage.imageUrl }}
+              style={styles.productImage}
+              resizeMode="contain"
+            />
           ) : (
             <View style={styles.imagePlaceholder}>
               {aiRunning ? (
@@ -138,6 +145,9 @@ export default function MyProposalDetail({ navigation, route }: Props) {
               <Text style={styles.aiBadgeText}>🤖 AI 생성</Text>
             </View>
           )}
+          <View style={styles.badgeWrapper}>
+            <StatusBadge status={proposal?.proposalStatus} />
+          </View>
         </View>
 
         {/* 기본 정보 */}
@@ -237,13 +247,24 @@ const styles = StyleSheet.create({
   backIcon:    { fontSize: 22, color: '#1a1a2e' },
   headerTitle: { fontSize: 17, fontWeight: '700', color: '#1a1a2e' },
 
-  imageBox:             { height: 280, backgroundColor: '#fff', position: 'relative' },
+  imageBox: {
+    height: IMAGE_BOX_HEIGHT,
+    backgroundColor: '#fff',
+    position: 'relative',
+    overflow: 'hidden',
+  },
   productImage:         { width: '100%', height: '100%' },
   imagePlaceholder:     { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 8 },
   imagePlaceholderEmoji:{ fontSize: 60 },
   imagePlaceholderText: { fontSize: 14, color: '#888' },
   aiBadge:     { position: 'absolute', top: 12, right: 12, backgroundColor: '#0076F0', borderRadius: 8, paddingHorizontal: 10, paddingVertical: 5 },
   aiBadgeText: { fontSize: 12, color: '#fff', fontWeight: '700' },
+  badgeWrapper: {
+    position: 'absolute',
+    bottom: 16,
+    right: 24,
+    zIndex: 20,
+  },
 
   section:      { backgroundColor: '#fff', padding: 20, marginTop: 8 },
   sectionTitle: { fontSize: 15, fontWeight: '700', color: '#1a1a2e', marginBottom: 12 },

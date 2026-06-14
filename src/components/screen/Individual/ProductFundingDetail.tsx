@@ -160,7 +160,7 @@ if (!product) {
               <Image
                 style={styles.productImage}
                 source={{ uri: encodeURI(product.images[0].imageUrl) }}
-                resizeMode="cover"
+                resizeMode="contain"
               />
             )
             :
@@ -370,10 +370,10 @@ const styles = StyleSheet.create({
   
   badgeWrapper: {
     position: 'absolute',
-    top: 186,
+    bottom: 16,
     right: 24,
     zIndex: 20,
-},
+  },
 
   // 섹션
   section: {

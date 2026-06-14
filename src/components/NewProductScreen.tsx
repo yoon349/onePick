@@ -93,8 +93,7 @@ export default function NewPost({ navigation }: Props) {
             '등록 완료',
             '상품이 성공적으로 등록되었습니다.'
             );
-
-            navigation.goBack();
+            navigation.navigator('MyPage');
 
         } catch (error) {
 
