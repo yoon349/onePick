@@ -43,7 +43,7 @@ export default function NewProduct({ navigation, route }: Props) {
     const [title, setTitle]               = useState(productName);
     const [content, setContent]           = useState(aiDescription ?? '');
     const [price, setPrice]               = useState(aiPrice ? String(aiPrice) : '');
-    const [minPeople, setMinPeople]       = useState('');
+    const [minQuantity, setMinQuantity]       = useState('');
     const [deadlineDays, setDeadlineDays] = useState('');
     const [category, setCategory]         = useState('');
 
@@ -55,25 +55,25 @@ export default function NewProduct({ navigation, route }: Props) {
 
     useEffect(() => {
         const priceValue = parsePositiveInt(price);
-        const minPeopleValue = parsePositiveInt(minPeople);
+        const minQuantityValue = parsePositiveInt(minQuantity);
         const deadlineValue = parsePositiveInt(deadlineDays);
         const isFilled =
             title.trim() !== '' &&
             content.trim() !== '' &&
             priceValue !== null &&
-            minPeopleValue !== null &&
+            minQuantityValue !== null &&
             deadlineValue !== null &&
             category.trim() !== '';
         setFulfilled(isFilled);
-    }, [title, content, price, minPeople, deadlineDays, category]);
+    }, [title, content, price, minQuantity, deadlineDays, category]);
 
     const handleSubmit = async () => {
         try {
-            const parsedMinPeople = parsePositiveInt(minPeople);
+            const parsedMinQuantity = parsePositiveInt(minQuantity);
             const parsedDeadlineDays = parsePositiveInt(deadlineDays);
             const submitPrice = aiPrice ?? parsePositiveInt(price);
 
-            if (submitPrice === null || parsedMinPeople === null || parsedDeadlineDays === null) {
+            if (submitPrice === null || parsedMinQuantity === null || parsedDeadlineDays === null) {
                 Alert.alert('입력 오류', '가격, 최소 인원, 마감 기한은 숫자만 입력해 주세요.');
                 return;
             }
@@ -82,7 +82,7 @@ export default function NewProduct({ navigation, route }: Props) {
                 title,
                 content,
                 price:        submitPrice,
-                minPeople:    parsedMinPeople,
+                minQuantity:    parsedMinQuantity,
                 deadlineDays: parsedDeadlineDays,
                 category,
                 ...(aiProductId ? { productId: aiProductId } : {}),
@@ -145,7 +145,7 @@ export default function NewProduct({ navigation, route }: Props) {
                     <InputField label="제목"      placeholder="제목 입력"      value={title}        onChangeText={setTitle} />
                     <InputField label="상품 설명" placeholder="상품 설명 입력" value={content}      onChangeText={setContent} multiline />
                     <InputField label="가격 (AI 산정)" placeholder="AI 분석 후 자동 입력" value={price} onChangeText={(text: string) => setPrice(filterDigitsOnly(text))} numeric editable={!aiPrice} />
-                    <InputField label="최소 인원" placeholder="최소 인원 입력" value={minPeople}    onChangeText={(text: string) => setMinPeople(filterDigitsOnly(text))} numeric />
+                    <InputField label="최소 주문 수량" placeholder="최소 주문 수량 입력" value={minQuantity}    onChangeText={(text: string) => setMinQuantity(filterDigitsOnly(text))} numeric />
                     <InputField label="마감 기한" placeholder="일 단위 입력"   value={deadlineDays} onChangeText={(text: string) => setDeadlineDays(filterDigitsOnly(text))} numeric />
 
                     <View style={styles.inputGroup}>

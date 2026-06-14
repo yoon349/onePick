@@ -5,7 +5,7 @@ export interface CreateProductRequest {
     title: string;
     content: string;
     price: number;
-    minPeople: number;
+    minQuantity: number;
     deadlineDays: number;
     category: string;
     productId?: number;
