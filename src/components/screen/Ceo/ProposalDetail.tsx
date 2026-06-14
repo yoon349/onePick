@@ -193,8 +193,17 @@ export default function ProposalDetail({ navigation, route }: Props) {
 
         {/* 이미지 영역 */}
         <View style={styles.imageBox}>
-          {mainImage?.imageUrl ? (
-            <Image source={{ uri: mainImage.imageUrl }} style={styles.productImage} resizeMode="cover" />
+          { proposal.images[0] ? (
+            <Image
+              source={{ uri: encodeURI(proposal.images[0].imageUrl) }}
+              style={styles.productImage}
+              resizeMode="cover"
+              onError={(e) => {
+                console.log('이미지 로드 실패');
+                console.log(proposal.thumbnail.imageUrl);
+                console.log(e.nativeEvent);
+              }}
+            />
           ) : (
             <View style={styles.imagePlaceholder}>
               {aiRunning ? (
@@ -207,7 +216,11 @@ export default function ProposalDetail({ navigation, route }: Props) {
               )}
             </View>
           )}
-          {mainImage?.sourceType === 'AI' && mainImage?.aiStatus === 'SUCCESS' && (
+          {proposal?.images?.some(
+            (img: any) =>
+              img.sourceType === 'AI' &&
+              img.aiStatus === 'SUCCESS'
+          ) && (
             <View style={styles.aiBadge}>
               <Text style={styles.aiBadgeText}>🤖 AI 생성</Text>
             </View>
