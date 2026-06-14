@@ -28,7 +28,7 @@ const buildPayload = (body: CreatePostRequest): ProductPayload => ({
     price: body.price,
     minQuantity: body.minQuantity,
     deadlineDays: body.deadlineDays,
-    category: body.category
+    category: body.category,
     imageMetas: body.imageMetas.map((img, index) => ({
     })),
 });
