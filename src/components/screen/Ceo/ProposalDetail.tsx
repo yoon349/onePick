@@ -71,9 +71,11 @@ export default function ProposalDetail({ navigation, route }: Props) {
       ]);
 
       console.log('제안제품 상세');
-      
-      setProposal(proposalRes.data.data);
       console.log(proposalRes.data.data);
+      setProposal(proposalRes.data.data);
+
+      console.log('받은 제안 목록');
+      console.log(fundingsRes.data ?? []);
       setProposalFundings(fundingsRes.data ?? []);
 
 
@@ -282,6 +284,9 @@ export default function ProposalDetail({ navigation, route }: Props) {
                 </View>
                 <View style={styles.fundingInfo}>
                   <Text style={styles.fundingNickname}>{funding.sellerNickname ?? '판매자'}</Text>
+                  <Text style={styles.fundingContent}>
+                    {funding.content}
+                  </Text>
                   <Text style={styles.fundingPrice}>{funding.price?.toLocaleString()}원</Text>
                 </View>
                 <View style={styles.fundingBtns}>
@@ -490,8 +495,13 @@ const styles = StyleSheet.create({
   emptyText:   { fontSize: 14, color: '#aaa', textAlign: 'center', paddingVertical: 20 },
 
   fundingCard: {
-    backgroundColor: '#f8f8ff', borderRadius: 12, padding: 14,
-    marginBottom: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
+    backgroundColor: '#f8f8ff',
+    borderRadius: 12,
+    padding: 14,
+    marginBottom: 10,
+
+    flexDirection: 'row',
+    alignItems: 'flex-start',
   },
 
   fundingRank: {
@@ -505,12 +515,20 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '700',
   },
-
+  
   fundingInfo: {
-    right: 50,
+    flex: 1,
+    marginLeft: 12,
+    marginRight: 12,
   },
 
-  fundingNickname: { fontSize: 14, fontWeight: '600', color: '#1a1a2e', marginBottom: 4 },
+  fundingNickname: { fontSize: 16, fontWeight: '600', color: '#1a1a2e', marginBottom: 4 },
+  fundingContent: {
+    marginVertical: 2,
+    fontSize: 12,
+    color: '#888',
+    lineHeight: -23,
+  },
   fundingPrice:    { fontSize: 16, fontWeight: 'bold', color: '#0076F0' },
   fundingBtns:     { flexDirection: 'row', gap: 8 },
   rejectBtn:       { borderWidth: 1, borderColor: '#ef4444', borderRadius: 8, paddingHorizontal: 12, paddingVertical: 6 },
