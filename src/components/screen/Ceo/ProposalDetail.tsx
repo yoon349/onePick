@@ -540,7 +540,7 @@ const styles = StyleSheet.create({
     marginVertical: 2,
     fontSize: 12,
     color: '#888',
-    lineHeight: -23,
+    lineHeight: 14,
   },
   fundingPrice:    { fontSize: 16, fontWeight: 'bold', color: '#0076F0' },
   fundingBtns:     { flexDirection: 'row', gap: 8 },
