@@ -1,9 +1,8 @@
 import React, { useEffect, useRef } from 'react';
-import { Animated, StatusBar, View } from 'react-native';
+import { Animated, Image, StatusBar, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../navigation/StackNavigator';
-import OnePickLogo from '../brand/OnePickLogo';
 import SafeScreen from '../common/SafeScreen';
 import { styles } from './SplashScreenStyle';
 
@@ -54,7 +53,11 @@ export default function SplashScreen({ navigation }: Props) {
           <Animated.Text style={styles.slogan}>함께 사면, 더 좋은 선택</Animated.Text>
 
           <View style={styles.logoWrap}>
-            <OnePickLogo />
+            <Image
+              source={require('../../assets/brand/login-logo.jpg')}
+              style={styles.logoImage}
+              resizeMode="contain"
+            />
           </View>
         </Animated.View>
       </View>

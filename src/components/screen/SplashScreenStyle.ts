@@ -27,6 +27,11 @@ export const styles = StyleSheet.create({
   },
   logoWrap: {
     marginBottom: 56,
+    alignItems: 'center',
+  },
+  logoImage: {
+    width: 240,
+    height: 240,
   },
   footer: {
     position: 'absolute',

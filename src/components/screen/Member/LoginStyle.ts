@@ -24,6 +24,10 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 28,
   },
+  logoImage: {
+    width: 220,
+    height: 220,
+  },
   slogan: {
     fontSize: 24,
     fontWeight: '700',

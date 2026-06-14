@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   View,
   TextInput,
+  Image,
   Keyboard,
   Platform,
   InputAccessoryView,
@@ -18,7 +19,6 @@ import { RootStackParamList } from '../../../navigation/StackNavigator';
 import { postLogin } from '../../../api/Member/postLogin';
 import { getApiErrorMessage } from '../../../utils/apiError';
 import { SessionNotReadyError } from '../../../api/axios';
-import OnePickLogo from '../../brand/OnePickLogo';
 import SafeScreen from '../../common/SafeScreen';
 import { styles } from './LoginStyle';
 
@@ -80,7 +80,11 @@ export default function Login({ navigation }: Props) {
           showsVerticalScrollIndicator={false}
         >
           <View style={styles.logoWrap}>
-            <OnePickLogo symbolSize={80} wordmarkSize={32} />
+            <Image
+              source={require('../../../assets/brand/login-logo.jpg')}
+              style={styles.logoImage}
+              resizeMode="contain"
+            />
           </View>
 
           <Text style={styles.slogan}>함께 사면,{'\n'}더 좋은 선택</Text>

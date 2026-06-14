@@ -144,7 +144,7 @@ export const styles = StyleSheet.create({
 
     buttonDisabled: {
 
-        backgroundColor: '#a5b4fc',
+        backgroundColor: '#B6CAF3',
         
     },
 
