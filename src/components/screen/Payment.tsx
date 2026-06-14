@@ -156,7 +156,7 @@ export default function Payment({ navigation, route }: Props) {
 
                     <View style={styles.headerTextWrap}>
                     <Text style={styles.headerTitle}>
-                        💳  { request.isPayment ? '결제 수단 선택' : '내 결제 수단'}
+                        { request.isPayment ? '결제 수단 선택' : '내 결제 수단'}
                     </Text>
 
                     <Text style={styles.headerSub}>

@@ -21,6 +21,7 @@ import ProposalList from '../components/screen/Ceo/ProposalList'
 import ProposalDetail from '../components/screen/Ceo/ProposalDetail'
 import MyProductList from '../components/screen/Ceo/MyProductList'
 import MyProposalFundingList from '../components/screen/Ceo/MyProposalFundingList'
+import MyProposalFundingDetail from '../components/screen/Ceo/MyProposalFundingDetail'
 
 import Payment from '../components/screen/Payment'
 
@@ -95,6 +96,10 @@ export type RootStackParamList = {
   };
   MyProductList: undefined;
   MyProposalFundingList: undefined;
+  MyProposalFundingDetail: {
+    proposalId: number,
+    proposalFundingId: number,
+  };
 
   GongguAIScreen: undefined;
   OrderParserScreen: undefined;
@@ -200,6 +205,10 @@ export default function StackNavigator() {
       <Stack.Screen
         name="MyProposalFundingList"
         component={MyProposalFundingList}
+      />
+      <Stack.Screen
+        name="MyProposalFundingDetail"
+        component={MyProposalFundingDetail}
       />
       
 

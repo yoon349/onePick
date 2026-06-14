@@ -21,7 +21,6 @@ import { RootStackParamList } from '../../../navigation/StackNavigator';
 import ListHeader from '../../../public/screen/ListHeader'
 import BidCard from '../../../public/screen/BidCard';
 
-import { getProduct } from '../../../api/Product/getProduct';
 import { getMyFundings } from '../../../api/ProposalFunding/getMyFundings';
 import { deleteProposalFunding } from '../../../api/ProposalFunding/deleteProposalFunding';
 
@@ -152,6 +151,9 @@ export default function MyProposalFundingList({ navigation }: Props) {
                 setMyProposalFundings([]);
             }
 
+            console.log('내가 제안한 주문 제작 목록');
+            console.log(myProposalFundings);
+
         } catch (error) {
 
           if (axios.isAxiosError(error)) {
@@ -178,7 +180,10 @@ export default function MyProposalFundingList({ navigation }: Props) {
 
   const onRefresh = async () => {
     setRefreshing(true);
-    setTimeout(() => setRefreshing(false), 1000);
+
+    await fetchMyProposalFundingList();
+
+  setRefreshing(false);
   };
 
   const counts = {
@@ -253,14 +258,18 @@ export default function MyProposalFundingList({ navigation }: Props) {
               thumbnail={myProposalFunding.thumbnail !== null ? myProposalFunding.thumbnail.imageUrl : null}
               remainingDeadlineDays={0}
               buttonView={
-                myProposalFunding.productStatus === 'PENDING'
-                ? <Buttons proposalFundingId={myProposalFunding.proposalId} />
+                myProposalFunding.proposalFundingStatus === 'PENDING'
+                ? (
+                    <Buttons
+                      proposalFundingId={myProposalFunding.proposalFundingId}
+                    />
+                  )
                 : null
               }
               onPressNav={() => {
-                navigation.navigate('ProposalDetail', {
-                  isMine: false,
+                navigation.navigate('MyProposalFundingDetail', {
                   proposalId: Number(myProposalFunding.proposalId),
+                  proposalFundingId: Number(myProposalFunding.proposalFundingId),
                 })
               }}
             />)

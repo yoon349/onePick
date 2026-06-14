@@ -95,10 +95,6 @@ export default function ProductFundingDetail({ navigation, route }: Props) {
       Alert.alert('참여 오류', '개수를 올바르게 입력해 주세요.');
       return;
     }
-    if (Number(bidAmount) < product.minQuantity) {
-      Alert.alert('참여 오류', `최소 참여 가능 개수는 ${product.minQuantity}개입니다.`);
-      return;
-    }
 
     Alert.alert(
       '펀딩 참여 확인',
@@ -230,7 +226,7 @@ if (!product) {
                 : `${Math.abs(product?.remainingDeadlineDays)}일 경과`
               }
             />
-            <InfoItem label="최소 참여 수량"   value={`${product?.minQuantity}개`} />
+            <InfoItem label="모집 목표"   value={`${product?.minQuantity}개`} />
             <InfoItem
               label="펀딩 모집 상태"
               value={
@@ -274,7 +270,7 @@ if (!product) {
           <View style={styles.modalBox}>
             <Text style={styles.modalTitle}>📋 주문량 입력</Text>
             <Text style={styles.modalSub}>
-              최소 개수: {product.minQuantity}개
+              모집 목표: {product.minQuantity}개
             </Text>
 
             <TextInput

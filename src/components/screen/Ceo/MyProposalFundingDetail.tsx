@@ -1,4 +1,4 @@
-// ProposalDetail.tsx
+// MyProposalFundingDetail.tsx
 // (개인) 구매 요청 글 상세 화면 — 이미지, 제목, 설명 + 입찰 요청 목록
 
 import axios from 'axios';
@@ -12,10 +12,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../navigation/StackNavigator';
 import { RouteProp } from '@react-navigation/native';
 
-import { getFundings } from '../../../api/ProposalFunding/getFundings';
-import { patchAcceptFunding } from '../../../api/ProposalFunding/patchAcceptFunding';
-import { patchRejectFunding } from '../../../api/ProposalFunding/patchRejectFunding';
-import { postProposalFunding } from '../../../api/ProposalFunding/postProposalFunding';
+import { patchProposalFunding } from '../../../api/ProposalFunding/patchProposalFunding';
 
 import { api } from '../../../api/axios';
 
@@ -23,7 +20,7 @@ import { api } from '../../../api/axios';
 
 type Props = {
   navigation: NativeStackNavigationProp<RootStackParamList>;
-  route:      RouteProp<RootStackParamList, 'ProposalDetail'>;
+  route:      RouteProp<RootStackParamList, 'MyProposalFundingDetail'>;
 };
 
 
@@ -32,12 +29,11 @@ const CATEGORY_LABELS: Record<string, string> = {
   FASHION: '패션', BEAUTY: '뷰티', ETC: '기타',
 };
 
-export default function ProposalDetail({ navigation, route }: Props) {
+export default function MyProposalFundingDetail({ navigation, route }: Props) {
 
   const request = route.params;
 
   const [proposal, setProposal] = useState<any>(null);
-  const [proposalFundings, setProposalFundings] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   
   const [fulfilled, setFulfilled] = useState(false);
@@ -62,19 +58,14 @@ export default function ProposalDetail({ navigation, route }: Props) {
 
   const fetchAll = async () => {
     try {
-      // 제품 상세 + 입찰 목록 동시 호출
-      const [proposalRes, fundingsRes] = await Promise.all([
+      // 제품 상세 호출
+      const proposalRes = await Promise.all([
         api.get(`/api/v1/proposals/${request.proposalId}`),
-        getFundings(request.proposalId),
       ]);
 
       console.log('제안제품 상세');
-      console.log(proposalRes.data.data);
-      setProposal(proposalRes.data.data);
-
-      console.log('받은 제안 목록');
-      console.log(fundingsRes.data ?? []);
-      setProposalFundings(fundingsRes.data ?? []);
+      console.log(proposalRes[0].data.data);
+      setProposal(proposalRes[0].data.data);
 
 
     } catch (error) {
@@ -89,10 +80,15 @@ export default function ProposalDetail({ navigation, route }: Props) {
   }, [request.proposalId]);
   
 
-    const handlePropose = async (proposalId: number) => {
+    const handleUpdatePropose = async (proposalFundingId: number) => {
 
       try {
-        const result = await postProposalFunding(proposalId);
+        const body = {
+          price: Number(bidPrice),
+          content: bidContent,
+        }
+
+        const result = await patchProposalFunding(proposalFundingId, body);
         console.log(result);
         
         setModalVisible(false);
@@ -117,42 +113,6 @@ export default function ProposalDetail({ navigation, route }: Props) {
     }
 }
 
-  const handleAccept = async (proposalFundingId: number) => {
-
-    try {
-
-      const result = await patchAcceptFunding(proposalFundingId);
-      console.log(result);
-
-      navigation.navigate('ProposalPayment', {
-        proposalFundingId: proposalFundingId,
-      });
-
-    } catch (error) {
-
-      if (axios.isAxiosError(error)) {
-        Alert.alert('에러 발생', JSON.stringify(error.response?.data) || error.message);
-      } else {
-        Alert.alert('에러 발생', '알 수 없는 오류');
-      }
-    }
-  };
-
-  const handleReject = async (proposalFundingId: number) => {
-    try {
-      const result = await patchRejectFunding(proposalFundingId);
-
-      Alert.alert('❎ 거절 완료', '입찰을 성공적으로 거절했어요!');
-      navigation.goBack();
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        Alert.alert('에러 발생', JSON.stringify(error.response?.data) || error.message);
-      } else {
-        Alert.alert('에러 발생', '알 수 없는 오류');
-      }
-    }
-  };
-
   if (loading) {
     return (
       <View style={styles.loadingBox}>
@@ -170,7 +130,6 @@ export default function ProposalDetail({ navigation, route }: Props) {
     (img: any) => img.aiStatus === 'QUEUED' || img.aiStatus === 'RUNNING'
   );
 
-  const isBidClosed = proposal?.proposalStatus !== 'PENDING';
 
   return (
     <View style={styles.container}>
@@ -272,69 +231,23 @@ export default function ProposalDetail({ navigation, route }: Props) {
           </View>
         </View>
 
-        {/* 입찰 요청 목록 */}
-        { request.isMine ?
-        (<View style={styles.section}>
-          {isBidClosed && (
-            <View style={styles.closedBanner}>
-              <Text style={styles.closedBannerText}>입찰이 종료되었어요.</Text>
-            </View>
-          )}
-          <Text style={styles.sectionTitle}>📩 제작 제안 목록</Text>
-          {proposalFundings.length === 0 ? (
-            <Text style={styles.emptyText}>아직 받은 제안이 없어요</Text>
-          ) : (
-            proposalFundings.map((funding: any, index) => (
-              <View key={funding.proposalFundingId} style={styles.fundingCard}>
-                <View style={styles.fundingRank}>
-                  <Text style={styles.fundingRankText}>{index + 1}</Text>
-                </View>
-                <View style={styles.fundingInfo}>
-                  <Text style={styles.fundingNickname}>{funding.sellerNickname ?? '판매자'}</Text>
-                  <Text style={styles.fundingContent}>
-                    {funding.content}
-                  </Text>
-                  <Text style={styles.fundingPrice}>{funding.price?.toLocaleString()}원</Text>
-                </View>
-                <View style={styles.fundingBtns}>
-                  <TouchableOpacity
-                    style={[styles.rejectBtn, isBidClosed && styles.actionBtnDisabled]}
-                    disabled={isBidClosed}
-                    onPress={() => handleReject(funding.proposalFundingId)}
-                  >
-                    <Text style={[styles.rejectBtnText, isBidClosed && styles.actionBtnTextDisabled]}>거절</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={[styles.acceptBtn, isBidClosed && styles.actionBtnDisabled]}
-                    disabled={isBidClosed}
-                    onPress={() => handleAccept(funding.proposalFundingId)}
-                  >
-                    <Text style={[styles.acceptBtnText, isBidClosed && styles.actionBtnTextDisabled]}>수락</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            ))
-          )}
-        </View>
-        ) : ( <></> )
-        }
-
         <View style={{ height: 100, }}/>
 
+
       {/* 하단 입찰 버튼 */}
-      { proposal.proposalStatus === 'PENDING' && !request.isMine ?
-      (
-        <TouchableOpacity
+      { proposal.proposalStatus === 'PENDING' ?
+        (
+          <TouchableOpacity
             style={styles.button}
             onPress={() => setModalVisible(true)}
-        >
+          >
             <Text style={styles.buttonText}>
-                제작 제안하기
+              제안 수정하기
             </Text>
-        </TouchableOpacity>
-
-      ) : ( <></> )
+          </TouchableOpacity>
+        ) : ( <></> )
       }
+
 
       {/* 입찰 모달 */}
       <Modal
@@ -383,9 +296,9 @@ export default function ProposalDetail({ navigation, route }: Props) {
               <TouchableOpacity
                 disabled={!fulfilled}
                 style={styles.modalBidBtn}
-                onPress={() => handlePropose(proposal.proposalId)}
+                onPress={() => handleUpdatePropose(request.proposalFundingId)}
               >
-              <Text style={styles.modalBidText}>참여하기</Text>
+              <Text style={styles.modalBidText}>수정하기</Text>
             </TouchableOpacity>
           </View>
         </View>

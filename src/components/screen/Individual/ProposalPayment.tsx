@@ -142,15 +142,19 @@ export default function ProposalPayment({ navigation, route }: Props) {
 
                 {/* HEADER */}
                 <View style={styles.header}>
+                    <TouchableOpacity
+                        onPress={() => navigation.goBack()}
+                        style={styles.backBtn}
+                        accessibilityRole="button"
+                        accessibilityLabel="뒤로가기"
+                    >
+                        <Text style={styles.backIcon}>←</Text>
+                    </TouchableOpacity>
 
-                    <Text style={styles.headerTitle}>
-                        💳 결제 수단 선택
-                    </Text>
-
-                    <Text style={styles.headerSub}>
-                        사용할 결제 수단을 선택하세요
-                    </Text>
-
+                    <View style={styles.headerTextWrap}>
+                        <Text style={styles.headerTitle}>결제 수단 선택</Text>
+                        <Text style={styles.headerSub}>사용할 결제 수단을 선택하세요</Text>
+                    </View>
                 </View>
 
                 {/* BANK SECTION */}
