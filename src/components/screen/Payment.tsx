@@ -192,9 +192,9 @@ export default function Payment({ navigation, route }: Props) {
                                     styles.paymentItemSelected,
                                 ]}
                                 onPress={() => {
-
-                                    setSelectedCard(account.id);
-                                    setSelectedAccount(null);
+                                    
+                                    setSelectedAccount(account.id);
+                                    setSelectedCard(null);
 
                                 }}
                             >
