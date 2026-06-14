@@ -94,7 +94,12 @@ export default function ProposalDetail({ navigation, route }: Props) {
     const handlePropose = async (proposalId: number) => {
 
       try {
-        const result = await postProposalFunding(proposalId);
+        const body = {
+          price: Number(bidPrice),
+          content: bidContent,
+        }
+
+        const result = await postProposalFunding(proposalId, body);
         console.log(result);
         
         setModalVisible(false);
@@ -197,7 +202,7 @@ export default function ProposalDetail({ navigation, route }: Props) {
             <Image
               source={{ uri: encodeURI(mainImage.imageUrl) }}
               style={styles.productImage}
-              resizeMode="contain"
+              resizeMode="cover"
               onError={(e) => {
                 console.log('이미지 로드 실패');
                 console.log(proposal.thumbnail.imageUrl);
@@ -449,7 +454,7 @@ const styles = StyleSheet.create({
 
   imageBox: {
     position: 'relative',
-    height: 270,
+    height: 240,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
@@ -462,10 +467,10 @@ const styles = StyleSheet.create({
   
   badgeWrapper: {
     position: 'absolute',
-    bottom: 16,
+    top: 186,
     right: 24,
     zIndex: 20,
-  },
+},
 
 
 
