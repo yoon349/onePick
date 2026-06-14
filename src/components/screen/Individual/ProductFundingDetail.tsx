@@ -6,6 +6,7 @@ import React, { useState, useEffect } from 'react';
 import {
   Alert,
   View,
+  Image,
   Text,
   Modal,
   TextInput,
@@ -73,6 +74,7 @@ export default function ProductFundingDetail({ navigation, route }: Props) {
             console.log(JSON.stringify(data, null, 2));
 
             setProduct(data.data);
+            console.log(data.data.images[0].imageUrl)
 
         } catch (error) {
             console.log(error);
@@ -157,8 +159,19 @@ if (!product) {
 
         {/* 이미지 영역 */}
         <View style={styles.imageBox}>
-          <Text style={styles.imageEmoji}>{/*product.emoji ?? */'📦'}</Text>
-
+          { product?.images?.[0]?.imageUrl ?
+            (
+              <Image
+                style={styles.productImage}
+                source={{ uri: encodeURI(product.images[0].imageUrl) }}
+                resizeMode="cover"
+              />
+            )
+            :
+            (
+              <Text style={styles.imageEmoji}>❌</Text>
+            )
+          }
           <View style={styles.badgeWrapper}>
             <StatusBadge status={product?.status} />
           </View>
@@ -352,6 +365,11 @@ const styles = StyleSheet.create({
 
   imageEmoji: {
     fontSize: 100,
+  },
+
+  productImage:{
+    width: '100%',
+    height: '100%'
   },
   
   badgeWrapper: {

@@ -55,7 +55,7 @@ export default function BidCard({
         <View style={styles.cardEmoji}>
             {thumbnail !== null ?
             <Image
-                source={{ uri: thumbnail }}
+                source={{ uri: encodeURI(thumbnail) }}
                 style={styles.cardImage}
             /> :
             <Text style={styles.emojiText}>❌</Text>}
