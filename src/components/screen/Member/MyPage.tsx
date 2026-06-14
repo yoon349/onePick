@@ -344,7 +344,7 @@ export default function Mypage({ navigation, route }: Props) {
                             <TouchableOpacity
                                 style={styles.menuButton}
                                 onPress={() =>
-                                    navigation.navigate('ProductFundingList')
+                                    navigation.navigate('MyFundingList')
                                 }
                             >
                                 <Text style={styles.menuText}>⭐️  내가 참여한 펀딩 목록</Text>

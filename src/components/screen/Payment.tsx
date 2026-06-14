@@ -109,7 +109,7 @@ export default function Payment({ navigation, route }: Props) {
             '입찰이 성공적으로 완료됐어요!');
         
 
-        navigation.navigate('ProductFundingList');
+        navigation.goBack();
 
     } catch (error) {
         if (axios.isAxiosError(error)) {

@@ -132,7 +132,7 @@ export default function MyOrderDetail({ navigation }: Props) {
       >
         <View style={styles.summaryCard}>
           {thumbnailUrl ? (
-            <Image source={{ uri: thumbnailUrl }} style={styles.thumbnail} />
+            <Image source={{ uri: encodeURI(thumbnailUrl) }} style={styles.thumbnail} />
           ) : (
             <View style={styles.thumbnailPlaceholder}>
               <Text style={styles.thumbnailEmoji}>📦</Text>

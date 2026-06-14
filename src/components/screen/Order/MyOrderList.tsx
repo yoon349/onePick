@@ -43,7 +43,7 @@ function OrderCard({ order, onDetail }: OrderCardProps) {
     <View style={styles.card}>
       <View style={styles.cardTop}>
         {thumbnailUrl ? (
-          <Image source={{ uri: thumbnailUrl }} style={styles.thumbnail} />
+          <Image source={{ uri: encodeURI(thumbnailUrl) }} style={styles.thumbnail} />
         ) : (
           <View style={styles.thumbnailPlaceholder}>
             <Text style={styles.thumbnailEmoji}>📦</Text>
@@ -84,6 +84,7 @@ export default function MyOrderList({ navigation }: Props) {
     try {
       const data = await getMyOrders();
       setOrders(data.filter(order => order?.orderId != null));
+      console.log(orders);
     } catch (error) {
       console.log(error);
     }
