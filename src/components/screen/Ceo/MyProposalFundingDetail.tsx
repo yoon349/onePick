@@ -11,6 +11,7 @@ import FormScrollView from '../../common/FormScrollView';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../navigation/StackNavigator';
 import { RouteProp } from '@react-navigation/native';
+import { useAuthStore } from '../../../store/useAuthStore';
 
 import { patchProposalFunding } from '../../../api/ProposalFunding/patchProposalFunding';
 
@@ -30,6 +31,8 @@ const CATEGORY_LABELS: Record<string, string> = {
 };
 
 export default function MyProposalFundingDetail({ navigation, route }: Props) {
+
+  const memberData = useAuthStore((member) => member.memberData);
 
   const request = route.params;
 
@@ -92,7 +95,9 @@ export default function MyProposalFundingDetail({ navigation, route }: Props) {
         console.log(result);
         
         setModalVisible(false);
-        navigation.goBack();
+        navigation.navigate('MyPage', {
+          member: memberData,
+        });
 
     } catch (error) {
         if (axios.isAxiosError(error)) {
@@ -100,8 +105,7 @@ export default function MyProposalFundingDetail({ navigation, route }: Props) {
                 
             Alert.alert(
                 '에러 발생',
-                JSON.stringify(error.response?.data)
-                || error.message
+                '오류가 발생했습니다.'
             );
 
         } else {

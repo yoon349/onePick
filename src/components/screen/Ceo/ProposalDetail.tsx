@@ -103,6 +103,12 @@ export default function ProposalDetail({ navigation, route }: Props) {
         console.log(result);
         
         setModalVisible(false);
+        Alert.alert(
+              '✅ 제안 성공',
+              '제작 제안이 완료되었습니다.'
+        );
+
+
         navigation.goBack();
 
     } catch (error) {
@@ -111,8 +117,7 @@ export default function ProposalDetail({ navigation, route }: Props) {
                 
             Alert.alert(
                 '에러 발생',
-                JSON.stringify(error.response?.data)
-                || error.message
+                '오류가 발생했습니다.'
             );
 
         } else {
@@ -138,7 +143,7 @@ export default function ProposalDetail({ navigation, route }: Props) {
     } catch (error) {
 
       if (axios.isAxiosError(error)) {
-        Alert.alert('에러 발생', JSON.stringify(error.response?.data) || error.message);
+        Alert.alert('에러 발생', '오류가 발생했습니다.');
       } else {
         Alert.alert('에러 발생', '알 수 없는 오류');
       }
@@ -149,11 +154,11 @@ export default function ProposalDetail({ navigation, route }: Props) {
     try {
       const result = await patchRejectFunding(proposalFundingId);
 
-      Alert.alert('❎ 거절 완료', '입찰을 성공적으로 거절했어요!');
+      Alert.alert('❎ 거절 완료', '제안을 성공적으로 거절했습니다.');
       navigation.goBack();
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        Alert.alert('에러 발생', JSON.stringify(error.response?.data) || error.message);
+        Alert.alert('에러 발생', '오류가 발생했습니다.');
       } else {
         Alert.alert('에러 발생', '알 수 없는 오류');
       }

@@ -106,7 +106,7 @@ function Buttons({ proposalId, }: ButtonsProps) {
               console.log(result);
 
               Alert.alert(
-                '삭제 완료',
+                '❎ 삭제 완료',
                 '구매 요청이 삭제되었습니다.',
               );
 
@@ -119,7 +119,8 @@ function Buttons({ proposalId, }: ButtonsProps) {
 
                 Alert.alert(
                   '에러 발생',
-                  JSON.stringify(error.response?.data,) || error.message,);
+                  '오류가 발생했습니다.'
+                );
 
               } else {
                   

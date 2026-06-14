@@ -120,7 +120,7 @@ export default function NewProposal({ navigation, route }: Props) {
             const result = await postProposal(body);
 
             if (result.success) {
-                Alert.alert('등록 완료', '구매 요청이 성공적으로 등록되었습니다.');
+                Alert.alert('✅ 등록 완료', '구매 요청이 성공적으로 등록되었습니다.');
                 navigation.goBack();
             } else {
                 Alert.alert('에러 발생', result.message ?? '등록에 실패했어요.');
@@ -128,7 +128,7 @@ export default function NewProposal({ navigation, route }: Props) {
 
         } catch (error) {
             if (axios.isAxiosError(error)) {
-                Alert.alert('에러 발생', JSON.stringify(error.response?.data) || error.message);
+                Alert.alert('에러 발생', '오류가 발생했습니다.');
             } else {
                 Alert.alert('에러 발생', '알 수 없는 오류');
             }

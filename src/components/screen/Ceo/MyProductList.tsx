@@ -92,7 +92,7 @@ function Buttons({ productId, }: ButtonsProps) {
               console.log(result);
 
               Alert.alert(
-                '종료 완료',
+                '✅ 종료 완료',
                 '펀딩이 종료되었습니다.',
               );
 
@@ -105,7 +105,8 @@ function Buttons({ productId, }: ButtonsProps) {
 
                 Alert.alert(
                   '에러 발생',
-                  JSON.stringify(error.response?.data,) || error.message,);
+                  '오류가 발생했습니다.'
+                );
 
               } else {
                   
@@ -142,7 +143,7 @@ function Buttons({ productId, }: ButtonsProps) {
               console.log(result);
 
               Alert.alert(
-                '취소 완료',
+                '❎ 취소 완료',
                 '펀딩이 취소되었습니다.',
               );
 

@@ -24,6 +24,8 @@ import { RouteProp } from '@react-navigation/native';
 import { postApplyFunding } from '../../api/Product/postApplyFunding';
 import { getMyAccounts } from '../../api/Member/getMyAccounts';
 
+import { useAuthStore } from '../../store/useAuthStore';
+
 import { styles } from './PaymentStyle';
 
 type HomeScreenNavigationProp =
@@ -60,6 +62,8 @@ type Card = {
 
 
 export default function Payment({ navigation, route }: Props) {
+
+    const memberData = useAuthStore((member) => member.memberData);
 
     const request = route.params;
 
@@ -106,10 +110,12 @@ export default function Payment({ navigation, route }: Props) {
         
         Alert.alert(
             '✅ 입찰 완료',
-            '입찰이 성공적으로 완료됐어요!');
+            '입찰이 성공적으로 완료되었습니다.');
         
 
-        navigation.goBack();
+        navigation.navigate('MyPage', {
+            member: memberData,
+        });
 
     } catch (error) {
         if (axios.isAxiosError(error)) {

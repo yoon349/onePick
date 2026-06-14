@@ -22,6 +22,7 @@ import { SessionNotReadyError } from '../../../api/axios';
 import SafeScreen from '../../common/SafeScreen';
 import { styles } from './LoginStyle';
 
+import { useAuthStore } from '../../../store/useAuthStore';
 const PHONE_INPUT_ACCESSORY_ID = 'phone-input-accessory';
 
 type Props = {
@@ -32,6 +33,8 @@ export default function Login({ navigation }: Props) {
   const [fulfilled, setFulfilled] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const setMemberData = useAuthStore((state) => state.setMemberData);
 
   useEffect(() => {
     setFulfilled(phoneNumber.trim() !== '');
@@ -51,7 +54,11 @@ export default function Login({ navigation }: Props) {
         return;
       }
 
+      setMemberData(result.data);
+      console.log(result.data)
+
       navigation.replace('MyPage', { member: result.data });
+
     } catch (error) {
       if (error instanceof SessionNotReadyError) {
         Alert.alert('세션 오류', error.message);

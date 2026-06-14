@@ -20,6 +20,7 @@ import { RouteProp } from '@react-navigation/native';
 
 import { getMyAccounts } from '../../../api/Member/getMyAccounts';
 import { postAcceptPayment } from '../../../api/Payment/postAcceptPayment';
+import { useAuthStore } from '../../../store/useAuthStore';
 
 import { styles } from '../PaymentStyle';
 
@@ -57,6 +58,9 @@ type Card = {
 
 
 export default function ProposalPayment({ navigation, route }: Props) {
+
+    const memberData = useAuthStore((member) => member.memberData);
+
 
     const { proposalFundingId } = route.params;
 
@@ -103,7 +107,7 @@ export default function ProposalPayment({ navigation, route }: Props) {
         console.log(result);
         
         
-        Alert.alert('✅ 수락 완료', '입찰을 성공적으로 수락했어요!');
+        Alert.alert('✅ 수락 완료', '입찰을 성공적으로 수락했습니다.');
         
 
 
@@ -113,8 +117,7 @@ export default function ProposalPayment({ navigation, route }: Props) {
                 
             Alert.alert(
                 '에러 발생',
-                JSON.stringify(error.response?.data)
-                || error.message
+                '오류가 발생했습니다.'
             );
 
         } else {
@@ -126,7 +129,9 @@ export default function ProposalPayment({ navigation, route }: Props) {
     }
 
 
-    navigation.navigate('MyProposalList');
+    navigation.navigate('MyPage', {
+        member: memberData,
+    });
 
 }
 

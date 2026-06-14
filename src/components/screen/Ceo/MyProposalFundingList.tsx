@@ -17,6 +17,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../navigation/StackNavigator';
+import { useAuthStore } from '../../../store/useAuthStore';
 
 import ListHeader from '../../../public/screen/ListHeader'
 import BidCard from '../../../public/screen/BidCard';
@@ -60,9 +61,8 @@ type ButtonsProps = {
 
 function Buttons({ proposalFundingId, }: ButtonsProps) {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-  /*const remaining  = getRemainingTime(bid.endDate);*/
-  //const isPending   = bid.status === 'PENDING';
-  /*const isUrgent   = isActive && remaining.includes('시간') && !remaining.includes('일');*/
+
+  const memberData = useAuthStore((member) => member.memberData);
 
   const cancelMyProposalFunding = async (proposalFundingId: number) => {
 
@@ -85,11 +85,13 @@ function Buttons({ proposalFundingId, }: ButtonsProps) {
               console.log(result);
 
               Alert.alert(
-                '취소 완료',
-                '입찰 요청이 취소되었습니다.',
+                '❎ 취소 완료',
+                '제작 제안이 취소되었습니다.',
               );
 
-              navigation.goBack();
+              navigation.navigate('MyPage', {
+                member: memberData,
+              });
 
             } catch (error) {
                 
@@ -98,7 +100,8 @@ function Buttons({ proposalFundingId, }: ButtonsProps) {
 
                 Alert.alert(
                   '에러 발생',
-                  JSON.stringify(error.response?.data,) || error.message,);
+                  '오류가 발생했습니다.'
+                );
 
               } else {
                   
@@ -132,7 +135,7 @@ function Buttons({ proposalFundingId, }: ButtonsProps) {
 // ── 메인 화면 ──────────────────────────────────────────────
 export default function MyProposalFundingList({ navigation }: Props) {
 
-    const [myProposalFundings, setMyProposalFundings] = useState<any[]>([]);
+  const [myProposalFundings, setMyProposalFundings] = useState<any[]>([]);
     
     useEffect(() => {
         fetchMyProposalFundingList();

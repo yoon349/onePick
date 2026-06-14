@@ -92,12 +92,12 @@ export default function NewProduct({ navigation, route }: Props) {
             const result = await postProduct(body);
             console.log(result);
 
-            Alert.alert('등록 완료', '상품이 성공적으로 등록되었습니다.');
+            Alert.alert('✅ 등록 완료', '상품이 성공적으로 등록되었습니다.');
             navigation.goBack();
 
         } catch (error) {
             if (axios.isAxiosError(error)) {
-                Alert.alert('에러 발생', JSON.stringify(error.response?.data) || error.message);
+                Alert.alert('에러 발생', '오류가 발생했습니다.');
             } else {
                 Alert.alert('에러 발생', '알 수 없는 오류');
             }

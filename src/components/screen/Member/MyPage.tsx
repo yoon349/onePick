@@ -13,8 +13,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../navigation/StackNavigator';
 import { RouteProp } from '@react-navigation/native';
 
-import { getMyProducts } from '../../../api/Product/getMyProducts';
-import { getMyFundings } from '../../../api/Product/getMyFundings';
+import { useAuthStore } from '../../../store/useAuthStore';
 import { requireSessionReady, clearSession } from '../../../api/axios';
 
 import { styles } from './MyPageStyle';
@@ -41,6 +40,8 @@ export default function Mypage({ navigation, route }: Props) {
     const user = route.params;
     const isCEO = user.member.type === 'CEO';
 
+    const clearMemberData = useAuthStore((member) => member.clearMemberData);
+
     useEffect(() => {
         const loadDashboard = async () => {
             try {
@@ -49,51 +50,11 @@ export default function Mypage({ navigation, route }: Props) {
                 navigation.replace('Login');
                 return;
             }
-
-            if (isCEO) {
-                await fetchMyProductList();
-            } else {
-                await fetchMyFundingList();
-            }
         };
 
         loadDashboard();
     }, [isCEO, navigation]);
     
-    const fetchMyProductList = async () => {
-        try {
-            const data = await getMyProducts();
-            console.log(JSON.stringify(data, null, 2));
-            
-            if (Array.isArray(data)) {
-                setMyProducts(data);
-            } else if (Array.isArray(data.data)) {
-                setMyProducts(data.data);
-            } else {
-                setMyProducts([]);
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    const fetchMyFundingList = async () => {
-        try {
-            const data = await getMyFundings();
-            console.log(JSON.stringify(data, null, 2));
-            
-            if (Array.isArray(data)) {
-                setMyFundings(data);
-            } else if (Array.isArray(data.data)) {
-                setMyFundings(data.data);
-            } else {
-                setMyFundings([]);
-            }
-
-        } catch (error) {
-            console.log(error);
-        }
-    };
 
     const handleLogout = () => {
         Alert.alert(
@@ -108,6 +69,7 @@ export default function Mypage({ navigation, route }: Props) {
                     text: '로그아웃',
                     style: 'destructive',
                     onPress: async () => {
+                        clearMemberData();
                         await clearSession();
                         navigation.replace('Login');
                     },

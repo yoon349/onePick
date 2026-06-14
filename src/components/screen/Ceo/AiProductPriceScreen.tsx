@@ -56,7 +56,12 @@ export default function AiProductPriceScreen({ navigation }: Props) {
             });
 
         } catch (error: any) {
-            Alert.alert('에러 상세', error?.message ?? JSON.stringify(error));
+            Alert.alert(
+                '에러 발생',
+                '오류가 발생했습니다.'
+            );
+                
+            console.log(error?.message ?? JSON.stringify(error));
         } finally {
             setLoading(false);
         }

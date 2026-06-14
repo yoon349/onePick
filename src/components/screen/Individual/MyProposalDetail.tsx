@@ -59,7 +59,7 @@ export default function MyProposalDetail({ navigation, route }: Props) {
   const handleAccept = async (proposalFundingId: number) => {
     try {
       const result = await patchAcceptFunding(proposalFundingId);
-      Alert.alert('✅ 수락 완료', '입찰을 성공적으로 수락했어요!');
+      Alert.alert('✅ 수락 완료', '입찰을 성공적으로 수락했습니다.');
       navigation.goBack();
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -73,11 +73,11 @@ export default function MyProposalDetail({ navigation, route }: Props) {
   const handleReject = async (proposalFundingId: number) => {
     try {
       const result = await patchRejectFunding(proposalFundingId);
-      Alert.alert('❎ 거절 완료', '입찰을 성공적으로 거절했어요!');
+      Alert.alert('❎ 거절 완료', '입찰을 성공적으로 거절했습니다.');
       navigation.goBack();
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        Alert.alert('에러 발생', JSON.stringify(error.response?.data) || error.message);
+        Alert.alert('에러 발생', '오류가 발생했습니다.');
       } else {
         Alert.alert('에러 발생', '알 수 없는 오류');
       }

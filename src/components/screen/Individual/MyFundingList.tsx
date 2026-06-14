@@ -97,7 +97,7 @@ function Buttons({ productId, }: ButtonsProps) {
               console.log(result);
 
               Alert.alert(
-                '취소 완료',
+                '❎ 취소 완료',
                 '입찰이 취소되었습니다.',
               );
 
@@ -110,7 +110,8 @@ function Buttons({ productId, }: ButtonsProps) {
 
                 Alert.alert(
                   '에러 발생',
-                  JSON.stringify(error.response?.data,) || error.message,);
+                  '오류가 발생했습니다.'
+                );
 
               } else {
                   
