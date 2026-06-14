@@ -12,6 +12,9 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../navigation/StackNavigator';
 import { postProductPriceJob } from '../../../api/ProductPrice/productPriceApi';
 
+import { SCREEN_HEADER_TOP_COMPACT } from '../../../utils/screenLayout';
+
+
 type Props = {
     navigation: NativeStackNavigationProp<RootStackParamList>;
 };
@@ -68,12 +71,19 @@ export default function AiProductPriceScreen({ navigation }: Props) {
 
                 {/* 헤더 */}
                 <View style={styles.header}>
-                    <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
-                        <Text style={styles.backIcon}>←</Text>
-                    </TouchableOpacity>
-                    <Text style={styles.headerTitle}>AI 적정가격 분석</Text>
-                    <View style={{ width: 40 }} />
+                    <View style={styles.btnView}>
+                        <TouchableOpacity
+                            onPress={() => {navigation.goBack()}}
+                            style={styles.backBtn}
+                        >
+                            <Text style={styles.backIcon}>←</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.headerView}>
+                        <Text style={styles.headerTitle}>AI 적정가격 분석</Text>
+                    </View>
                 </View>
+
 
                 {/* 설명 */}
                 <View style={styles.descBox}>
@@ -130,10 +140,43 @@ const styles = StyleSheet.create({
     container: { flex: 1, backgroundColor: '#f5f6fa' },
     scroll:    { padding: 20, paddingBottom: 40 },
 
-    header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 24 },
-    backBtn:     { width: 40, height: 40, alignItems: 'center', justifyContent: 'center' },
-    backIcon:    { fontSize: 22, color: '#1a1a2e' },
-    headerTitle: { fontSize: 18, fontWeight: '700', color: '#1a1a2e' },
+
+
+    header: {
+        marginTop: SCREEN_HEADER_TOP_COMPACT,
+        flexDirection: 'row',
+    },
+
+
+    headerTitle: {
+        fontSize: 28,
+        fontWeight: 'bold',
+        color: '#1a1a2e',
+        marginBottom: 6,
+    },
+    
+    headerView: {
+        left: 10,
+        marginBottom: 20,
+        paddingTop: Platform.OS === 'ios' ? 10 : 0,
+    },
+    
+    btnView: {
+        alignItems: 'flex-start',
+        marginTop: 10,
+    },
+    
+    backBtn: {
+        width: 40,
+        height: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+
+    backIcon: {
+        fontSize: 32,
+        color: '#1a1a2e',
+    },
 
     descBox: {
         backgroundColor: '#0076F0', borderRadius: 16,
@@ -158,6 +201,6 @@ const styles = StyleSheet.create({
     },
 
     button:         { backgroundColor: '#0076F0', borderRadius: 14, paddingVertical: 16, alignItems: 'center' },
-    buttonDisabled: { backgroundColor: '#a5b4fc' },
+    buttonDisabled: { backgroundColor: '#B6CAF3' },
     buttonText:     { color: '#fff', fontSize: 16, fontWeight: '700' },
 });

@@ -166,7 +166,7 @@ export default function NewProposal({ navigation, route }: Props) {
                         </TouchableOpacity>
                     </View>
                     <View style={styles.headerView}>
-                        <Text style={styles.headerTitle}>🛒  제작 제안 글 작성</Text>
+                        <Text style={styles.headerTitle}>제작 제안 글 작성</Text>
                         <Text style={styles.headerSub}>필요한 상품의 정보를 입력해 주세요</Text>
                     </View>
                 </View>
