@@ -65,7 +65,7 @@ export const postProduct = async (body: CreatePostRequest) => {
             price: body.price,
             minQuantity: body.minQuantity,
             deadlineDays: body.deadlineDays,
-            category: body.category
+            category: body.category,
             imageMetas: [],
         });
         return response.data;
