@@ -487,4 +487,25 @@ menuDivider: {
     backgroundColor: '#E5E7EB',
 },
 */
+
+    logoutButton: {
+        alignItems: 'center',
+        justifyContent: 'center',
+
+        backgroundColor: '#fff',
+
+        borderRadius: 14,
+        borderWidth: 1,
+        borderColor: '#e0e0e0',
+
+        paddingVertical: 14,
+
+        marginTop: 8,
+    },
+
+    logoutText: {
+        fontSize: 15,
+        fontWeight: '600',
+        color: '#e53935',
+    },
 });

@@ -16,7 +16,7 @@ import {
   Dimensions,
 } from 'react-native';
 import FormScrollView from '../../common/FormScrollView';
-import SignatureCanvas from 'react-native-signature-canvas';
+import SignaturePad from '../../common/SignaturePad';
 
 
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
@@ -116,18 +116,8 @@ export default function Sketch2ProductScreen({ navigation }: Props) {
   };
 
   // 그림판 스타일 (WebView 내부)
-  const canvasStyle = `
-    .m-signature-pad {
-      border: none;
-      box-shadow: none;
-    }
-    .m-signature-pad--body {
-      border: none;
-    }
-    body {
-      background: #ffffff;
-    }
-  `;
+  const canvasWidth = SCREEN_WIDTH - 72;
+  const canvasHeight = 280;
 
   return (
     <KeyboardAvoidingView
@@ -156,23 +146,14 @@ export default function Sketch2ProductScreen({ navigation }: Props) {
             </TouchableOpacity>
           </View>
 
-          <View style={styles.canvasWrapper}>
-            <SignatureCanvas
+          <View style={styles.canvasWrapper} collapsable={false}>
+            <SignaturePad
               ref={signatureRef}
+              width={canvasWidth}
+              height={canvasHeight}
               onOK={handleSignature}
               onBegin={() => setHasDrawn(true)}
-              descriptionText=""
-              clearText="지우기"
-              confirmText="완료"
-              webStyle={canvasStyle}
-              backgroundColor="white"
-              penColor="black"
-              dotSize={3}
-              minWidth={2}
-              maxWidth={4}
               style={styles.canvas}
-              autoClear={false}
-              imageType="image/png"
             />
           </View>
 

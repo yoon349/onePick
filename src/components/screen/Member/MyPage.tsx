@@ -6,6 +6,7 @@ import {
     Image,
     TouchableOpacity,
     ScrollView,
+    Alert,
 } from 'react-native';
 
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -14,7 +15,7 @@ import { RouteProp } from '@react-navigation/native';
 
 import { getMyProducts } from '../../../api/Product/getMyProducts';
 import { getMyFundings } from '../../../api/Product/getMyFundings';
-import { requireSessionReady } from '../../../api/axios';
+import { requireSessionReady, clearSession } from '../../../api/axios';
 
 import { styles } from './MyPageStyle';
 
@@ -94,7 +95,26 @@ export default function Mypage({ navigation, route }: Props) {
         }
     };
 
-
+    const handleLogout = () => {
+        Alert.alert(
+            '로그아웃',
+            '로그아웃 하시겠습니까?',
+            [
+                {
+                    text: '취소',
+                    style: 'cancel',
+                },
+                {
+                    text: '로그아웃',
+                    style: 'destructive',
+                    onPress: async () => {
+                        await clearSession();
+                        navigation.replace('Login');
+                    },
+                },
+            ],
+        );
+    };
 
     return (
 
@@ -334,6 +354,13 @@ export default function Mypage({ navigation, route }: Props) {
                         )
                     }
                 </View>
+
+                <TouchableOpacity
+                    style={styles.logoutButton}
+                    onPress={handleLogout}
+                >
+                    <Text style={styles.logoutText}>로그아웃</Text>
+                </TouchableOpacity>
 
             </ScrollView>
 

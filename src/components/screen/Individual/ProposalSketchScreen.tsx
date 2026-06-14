@@ -4,6 +4,7 @@
 import React, { useRef, useState } from 'react';
 import {
   Alert,
+  Dimensions,
   KeyboardAvoidingView,
   Platform,
   SafeAreaView,
@@ -13,7 +14,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import SignatureCanvas from 'react-native-signature-canvas';
+import SignaturePad from '../../common/SignaturePad';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../../../navigation/StackNavigator';
@@ -23,12 +24,9 @@ type Props = {
   route: RouteProp<RootStackParamList, 'ProposalSketchScreen'>;
 };
 
-const canvasStyle = `
-  .m-signature-pad { border: none; box-shadow: none; margin: 0; }
-  .m-signature-pad--body { border: none; }
-  .m-signature-pad--footer { display: none; margin: 0; }
-  body, html { margin: 0; padding: 0; background: #ffffff; }
-`;
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
+const CANVAS_WIDTH = SCREEN_WIDTH - 32;
+const CANVAS_HEIGHT = Math.max(280, SCREEN_HEIGHT * 0.42);
 
 export default function ProposalSketchScreen({ navigation, route }: Props) {
   const signatureRef = useRef<any>(null);
@@ -73,24 +71,15 @@ export default function ProposalSketchScreen({ navigation, route }: Props) {
           </View>
         </View>
 
-        <View style={styles.canvasWrapper}>
-          <SignatureCanvas
+        <View style={styles.canvasWrapper} collapsable={false}>
+          <SignaturePad
             ref={signatureRef}
+            width={CANVAS_WIDTH}
+            height={CANVAS_HEIGHT}
             onOK={handleSignature}
             onBegin={() => setHasDrawn(true)}
             onEmpty={() => Alert.alert('스케치 필요', '먼저 스케치를 그려 주세요.')}
-            webStyle={canvasStyle}
-            backgroundColor="white"
-            penColor="black"
-            dotSize={3}
-            minWidth={2}
-            maxWidth={4}
             style={styles.canvas}
-            autoClear={false}
-            imageType="image/png"
-            descriptionText=""
-            clearText=""
-            confirmText=""
           />
         </View>
 
@@ -140,7 +129,6 @@ const styles = StyleSheet.create({
   headerTitle: { fontSize: 20, fontWeight: '700', color: '#1a1a2e' },
   headerSub: { fontSize: 13, color: '#666', marginTop: 2 },
   canvasWrapper: {
-    flex: 1,
     marginHorizontal: 16,
     marginBottom: 12,
     borderWidth: 1.5,
@@ -148,8 +136,11 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     overflow: 'hidden',
     backgroundColor: '#fff',
+    width: CANVAS_WIDTH,
+    height: CANVAS_HEIGHT,
+    alignSelf: 'center',
   },
-  canvas: { flex: 1, width: '100%', height: '100%' },
+  canvas: { flex: 1 },
   bottomPanel: {
     paddingHorizontal: 16,
     paddingBottom: 16,
