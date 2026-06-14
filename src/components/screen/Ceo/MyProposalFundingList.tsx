@@ -249,7 +249,7 @@ export default function MyProposalFundingList({ navigation }: Props) {
               id={myProposalFunding.proposalId}
               title={myProposalFunding.proposalTitle}
               category={myProposalFunding.proposalCategory}
-              valueString={`${myProposalFunding.maxPrice.toLocaleString()}원`}
+              valueString={`제안 ${myProposalFunding.proposalFundingPrice.toLocaleString()}원`}
               thumbnail={null}
               remainingDeadlineDays={0}
               buttonView={
