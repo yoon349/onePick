@@ -19,6 +19,10 @@ type ProductPayload = {
     deadlineDays: number,
     category: string,
     imageMetas: Array<{
+        sourceType: 'REAL';
+        aiGenerated: boolean;
+        prompt?: string;
+        displayOrder: number;
     }>;
 };
 
@@ -29,7 +33,14 @@ const buildPayload = (body: CreatePostRequest): ProductPayload => ({
     minQuantity: body.minQuantity,
     deadlineDays: body.deadlineDays,
     category: body.category,
+<<<<<<< HEAD
     imageMetas: body.imageMetas.map((img, index) => ({
+=======
+    imageMetas:   body.imageMetas.map((img, index) => ({
+        sourceType:   'REAL',
+        aiGenerated:  false,
+        displayOrder: index,
+>>>>>>> 74fd1b9 (fix: product 이미지 삽입 수정 및 판매가 산정 시간 조정)
     })),
 });
 

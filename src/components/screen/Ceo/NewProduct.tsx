@@ -81,12 +81,15 @@ export default function NewProduct({ navigation, route }: Props) {
                 return;
             }
 
+            let finalImageMetas = imageMetas;
+
             const body = {
                 title,
                 content,
                 price: submitPrice,
                 minQuantity: parsedMinQuantity,
                 deadlineDays: parsedDeadlineDays,
+                imageMetas:   finalImageMetas,
                 category,
                 ...(aiProductId ? { productId: aiProductId } : {}),
             };

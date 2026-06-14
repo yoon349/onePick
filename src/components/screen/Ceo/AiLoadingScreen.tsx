@@ -39,11 +39,11 @@ export default function AiLoadingScreen({ navigation, route }: Props) {
                 setCurrentStep(step);
                 Animated.timing(progressAnim, {
                     toValue: (step / (STEPS.length - 1)) * 80,
-                    duration: 800,
+                    duration: 400,
                     useNativeDriver: false,
                 }).start();
             }
-        }, 5000);
+        }, 1000);
         return () => clearInterval(stepRef.current);
     }, []);
 
