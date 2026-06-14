@@ -29,18 +29,18 @@ export const styles = StyleSheet.create({
         fontSize: 14,
         color: '#666',
     },
-    
+
     headerView: {
         left: 10,
         marginBottom: 20,
         paddingTop: Platform.OS === 'ios' ? 10 : 0,
     },
-    
+
     btnView: {
         alignItems: 'flex-start',
         marginTop: 10,
     },
-    
+
     backBtn: {
         width: 40,
         height: 40,
@@ -157,6 +157,77 @@ export const styles = StyleSheet.create({
         color: '#fff',
 
         fontSize: 16,
+        fontWeight: '700',
+    },
+
+    imageUploadBox: {
+        marginTop: 6,
+        borderWidth: 1.5,
+        borderStyle: 'dashed',
+        borderColor: '#d1d5db',
+
+        borderRadius: 16,
+
+        paddingVertical: 26,
+
+        alignItems: 'center',
+        justifyContent: 'center',
+
+        backgroundColor: '#fafafa',
+    },
+
+    imageUploadIcon: {
+        fontSize: 28,
+    },
+
+    imageUploadText: {
+        marginTop: 8,
+        fontSize: 15,
+        fontWeight: '700',
+        color: '#1a1a2e',
+    },
+
+    imageUploadSub: {
+        marginTop: 4,
+        fontSize: 12,
+        color: '#888',
+    },
+
+
+    previewRow: {
+        marginTop: 14,
+        gap: 10,
+    },
+
+    previewBox: {
+        position: 'relative',
+    },
+
+    previewImage: {
+        width: 90,
+        height: 90,
+        borderRadius: 14,
+    },
+
+    removeBtn: {
+        position: 'absolute',
+        top: -6,
+        right: -6,
+
+        width: 24,
+        height: 24,
+
+        borderRadius: 12,
+
+        backgroundColor: '#ef4444',
+
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+
+    removeBtnText: {
+        color: '#fff',
+        fontSize: 12,
         fontWeight: '700',
     },
 });
