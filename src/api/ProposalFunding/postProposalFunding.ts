@@ -1,9 +1,20 @@
 import { api } from '../axios';
 
-export const postProposalFunding = async (proposalId: number) => {
-    const response = await api.get(`/api/v1/proposals/${proposalId}/fundings`);
+export interface CreateProposalFundingRequest {
+    content: string;
+    price: number;
+}
+
+export const postProposalFunding = async (
+    proposalId: number,
+    body: CreateProposalFundingRequest,
+) => {
+    const response = await api.post(
+        `/api/v1/proposals/${proposalId}/fundings`,
+        body,
+    );
 
     return response.data;
 };
 
-// 입찰 요청 목록 조회
+// 제작 제안 등록
