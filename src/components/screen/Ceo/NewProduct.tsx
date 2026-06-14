@@ -144,7 +144,7 @@ export default function NewProduct({ navigation, route }: Props) {
 
                     <InputField label="제목"      placeholder="제목 입력"      value={title}        onChangeText={setTitle} />
                     <InputField label="상품 설명" placeholder="상품 설명 입력" value={content}      onChangeText={setContent} multiline />
-                    <InputField label="가격 (AI 산정)" placeholder="AI 분석 후 자동 입력" value={price} onChangeText={(text: string) => setPrice(filterDigitsOnly(text))} numeric editable={!aiPrice} />
+                    <InputField label="가격 (AI 산정)" placeholder="AI 분석 후 자동 입력" value={price} onChangeText={(text: string) => setPrice(filterDigitsOnly(text))} numeric/>
                     <InputField label="최소 주문 수량" placeholder="최소 주문 수량 입력" value={minQuantity}    onChangeText={(text: string) => setMinQuantity(filterDigitsOnly(text))} numeric />
                     <InputField label="마감 기한" placeholder="일 단위 입력"   value={deadlineDays} onChangeText={(text: string) => setDeadlineDays(filterDigitsOnly(text))} numeric />
 
