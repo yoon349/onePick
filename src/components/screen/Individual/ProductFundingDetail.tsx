@@ -20,7 +20,7 @@ import { RouteProp } from '@react-navigation/native';
 
 import { getProduct } from '../../../api/Product/getProduct';
 
-import StatusBadge from './StatusBadge';
+import ProductStatusBadge from '../../../public/screen/ProductStatusBadge';
 
 type HomeScreenNavigationProp =
   NativeStackNavigationProp<RootStackParamList>;
@@ -169,7 +169,7 @@ if (!product) {
             )
           }
           <View style={styles.badgeWrapper}>
-            <StatusBadge status={product?.status} />
+            <ProductStatusBadge status={product?.status} />
           </View>
         </View>
         

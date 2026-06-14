@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 
-type BidStatus = 'PENDING' | 'FINISHED' | 'CANCELED';
+type BidStatus = 'PENDING' | 'CHOSEN' | 'REJECTED';
 
 const BADGES: {
     key: BidStatus;
@@ -15,19 +15,19 @@ const BADGES: {
         color: '#0076F0',
     },
     {
-        key: 'FINISHED',
-        label: '종료',
+        key: 'CHOSEN',
+        label: '낙찰',
         color: '#10b981',
     },
     {
-        key: 'CANCELED',
-        label: '취소',
+        key: 'REJECTED',
+        label: '거절',
         color: '#ef4444',
     },
 ];
 
 
-export default function StatusBadge({ status }: { status: BidStatus }) {
+export default function ProposalStatusBadge({ status }: { status: BidStatus }) {
 
     const badge = BADGES.find(
         item => item.key === status,

@@ -17,6 +17,8 @@ import { patchAcceptFunding } from '../../../api/ProposalFunding/patchAcceptFund
 import { patchRejectFunding } from '../../../api/ProposalFunding/patchRejectFunding';
 import { postProposalFunding } from '../../../api/ProposalFunding/postProposalFunding';
 
+import ProposalStatusBadge from '../../../public/screen/ProposalStatusBadge';
+
 import { api } from '../../../api/axios';
 
 
@@ -223,6 +225,9 @@ export default function ProposalDetail({ navigation, route }: Props) {
               <Text style={styles.aiBadgeText}>🤖 AI 생성</Text>
             </View>
           )}
+          <View style={styles.badgeWrapper}>
+            <ProposalStatusBadge status={proposal?.status} />
+          </View>
         </View>
 
         {/* 기본 정보 */}

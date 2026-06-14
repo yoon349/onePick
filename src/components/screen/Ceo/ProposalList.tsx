@@ -146,7 +146,7 @@ export default function ProposalList({ navigation }: Props) {
               id={proposal.proposalId}
               title={proposal.title}
               category={proposal.proposalCategory}
-              valueString={`최대 ${proposal.maxPrice}원`}
+              valueString={`최대 ${proposal.maxPrice.toLocaleString()}원`}
               thumbnail={proposal.thumbnail !== null ? proposal.thumbnail.imageUrl : null}
               remainingDeadlineDays={proposal.remainingDeadlineDays}
               buttonView={null}
